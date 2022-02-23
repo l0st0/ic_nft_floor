@@ -7,6 +7,7 @@ interface CollectionState {
   collections: ModNFTCollectionType[];
   numberOfTokens: number;
   totalCollectionsPrice: number;
+  principal: string;
   loading: boolean;
   checking: boolean;
   error?: string;
@@ -16,6 +17,7 @@ const initialState: CollectionState = {
   collections: [],
   numberOfTokens: 0,
   totalCollectionsPrice: 0,
+  principal: '',
   loading: false,
   checking: false,
   error: undefined,
@@ -61,7 +63,11 @@ export const getCollections = createAsyncThunk<
 export const collectionSlice = createSlice({
   name: 'collection',
   initialState,
-  reducers: {},
+  reducers: {
+    signPrincipal: (state, action: PayloadAction<string>) => {
+      state.principal = action.payload;
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(getCollections.pending, (state) => {
@@ -87,7 +93,7 @@ export const collectionSlice = createSlice({
   },
 });
 
-export const {} = collectionSlice.actions;
+export const { signPrincipal } = collectionSlice.actions;
 export const collectionState = (state: RootState) => state.collection;
 
 export default collectionSlice.reducer;

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Stack, TextField } from '@mui/material';
+import { Button, IconButton, Stack, TextField } from '@mui/material';
 import useComponentSize from '@rehooks/component-size';
 import { ThemeButton } from '../ThemeButton';
 import { useAppDispatch, useAppSelector } from '../../hooks';
@@ -8,6 +8,8 @@ import { Controller, useForm } from 'react-hook-form';
 import { DfinityBadge } from '../DfinityBadge';
 import { StyledMainHeading } from './styles';
 import { SocialButton } from '../SocialButton';
+import { signPrincipal } from '../../store/collection/collectionSlice';
+import { Refresh, Send } from '@mui/icons-material';
 
 interface Form {
   principal: string;
@@ -15,7 +17,7 @@ interface Form {
 
 export const Header = () => {
   const dispatch = useAppDispatch();
-  const { loading } = useAppSelector((state) => state.collection);
+  const { loading, principal: principalID } = useAppSelector((state) => state.collection);
   const { loading: listingLoading } = useAppSelector((state) => state.listing);
 
   const headingRef = React.useRef(null);
@@ -24,12 +26,16 @@ export const Header = () => {
   const {
     control,
     handleSubmit,
+    watch,
     formState: { errors },
   } = useForm<Form>();
 
   const onSubmit = async ({ principal }: Form) => {
-    dispatch(getAllData({ principal }));
+    await dispatch(getAllData({ principal }));
+    dispatch(signPrincipal(principal));
   };
+
+  const { principal } = watch();
 
   return (
     <>
@@ -73,13 +79,14 @@ export const Header = () => {
               rules={{ required: true, maxLength: 63, minLength: 63 }}
               render={({ field: { value, onChange } }) => (
                 <TextField
+                  autoFocus
+                  fullWidth
                   disabled={loading || listingLoading}
                   id='principalInput'
                   placeholder='Enter your principal'
                   variant='outlined'
                   error={!!errors.principal}
                   helperText={!!errors.principal && 'Enter valid principal.'}
-                  fullWidth
                   sx={{ mr: 2 }}
                   value={value}
                   size='small'
@@ -95,9 +102,9 @@ export const Header = () => {
               disabled={loading || listingLoading}
               type='submit'
               variant='contained'
-              sx={{ m: '0 !important', maxHeight: 40 }}
+              sx={{ m: '0 !important', maxHeight: 40, minWidth: 0 }}
             >
-              Go
+              {principal === principalID ? <Refresh /> : <Send />}
             </Button>
           </Stack>
         </Stack>
