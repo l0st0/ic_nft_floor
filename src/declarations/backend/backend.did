@@ -1,0 +1,9 @@
+type PriceData = 
+ record {
+   date: text;
+   price: float64;
+ };
+service : {
+  getPrice: () -> (PriceData) query;
+  updatePrice: (float64, text) -> (PriceData);
+}
