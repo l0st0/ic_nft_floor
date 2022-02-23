@@ -1,24 +1,9 @@
-type Token = 
- record {
-   index: text;
-   nri: text;
-   url: text;
- };
 type PriceData = 
  record {
    date: text;
    price: float64;
  };
-type Collection = 
- record {
-   canisterId: text;
-   icon: text;
-   name: text;
-   tokens: vec Token;
- };
 service : {
-  getCollections: () -> (vec Collection) query;
   getPrice: () -> (PriceData) query;
-  updateCollection: (vec Collection) -> (vec Collection);
   updatePrice: (float64, text) -> (PriceData);
 }

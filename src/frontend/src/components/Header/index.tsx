@@ -1,15 +1,16 @@
 import React from 'react';
-import { Button, IconButton, Stack, TextField } from '@mui/material';
+import { Button, Stack, TextField } from '@mui/material';
 import useComponentSize from '@rehooks/component-size';
 import { ThemeButton } from '../ThemeButton';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { getAllData } from '../../store/actions';
 import { Controller, useForm } from 'react-hook-form';
 import { DfinityBadge } from '../DfinityBadge';
 import { StyledMainHeading } from './styles';
 import { SocialButton } from '../SocialButton';
-import { signPrincipal } from '../../store/collection/collectionSlice';
+import { getCollections } from '../../store/collection/collectionSlice';
 import { Refresh, Send } from '@mui/icons-material';
+import { getListings } from '../../store/listing/listingSlice';
+import { getPrice } from '../../store/price/priceSlice';
 
 interface Form {
   principal: string;
@@ -31,8 +32,9 @@ export const Header = () => {
   } = useForm<Form>();
 
   const onSubmit = async ({ principal }: Form) => {
-    await dispatch(getAllData({ principal }));
-    dispatch(signPrincipal(principal));
+    dispatch(getPrice());
+    await dispatch(getListings());
+    await dispatch(getCollections({ principal }));
   };
 
   const { principal } = watch();
@@ -104,7 +106,7 @@ export const Header = () => {
               variant='contained'
               sx={{ m: '0 !important', maxHeight: 40, minWidth: 0 }}
             >
-              {principal === principalID ? <Refresh /> : <Send />}
+              {principal === principalID && principal.length ? <Refresh /> : <Send />}
             </Button>
           </Stack>
         </Stack>

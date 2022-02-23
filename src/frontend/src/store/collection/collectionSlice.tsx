@@ -1,6 +1,8 @@
 import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit';
 import type { RootState } from '..';
 import { ModNFTCollectionType } from '../../types';
+import { getListings } from '../listing/listingSlice';
+import { getPrice } from '../price/priceSlice';
 import collectionService from './collectionService';
 
 interface CollectionState {
@@ -24,18 +26,27 @@ const initialState: CollectionState = {
 };
 
 export const getCollections = createAsyncThunk<
-  ModNFTCollectionType[],
+  { data: ModNFTCollectionType[]; principal: string },
   { principal: string },
   {
     rejectValue: string;
     state: RootState;
   }
->('collection/getCollections', async ({ principal }, { rejectWithValue, getState }) => {
+>('collection/getCollections', async ({ principal }, { dispatch, rejectWithValue, getState }) => {
   try {
     const collections = await collectionService.getCollections({ principal });
     if (!collections.length) return rejectWithValue('No collections found for this principal.');
 
-    const { listings } = getState().listing;
+    let { listings } = getState().listing;
+    const { price } = getState().price;
+
+    if (!listings.length) {
+      listings = await dispatch(getListings()).unwrap();
+    }
+
+    if (!price || price === 0) {
+      await dispatch(getPrice());
+    }
 
     const data = collections
       .map((item) => {
@@ -53,7 +64,7 @@ export const getCollections = createAsyncThunk<
       })
       .sort((a, b) => b.totalPrice - a.totalPrice);
 
-    return data;
+    return { data, principal };
   } catch (err) {
     const message = 'There was an error while getting collections.';
     return rejectWithValue(message);
@@ -63,11 +74,7 @@ export const getCollections = createAsyncThunk<
 export const collectionSlice = createSlice({
   name: 'collection',
   initialState,
-  reducers: {
-    signPrincipal: (state, action: PayloadAction<string>) => {
-      state.principal = action.payload;
-    },
-  },
+  reducers: {},
   extraReducers: (builder) => {
     builder
       .addCase(getCollections.pending, (state) => {
@@ -75,11 +82,12 @@ export const collectionSlice = createSlice({
         state.error = undefined;
       })
       .addCase(getCollections.fulfilled, (state, action) => {
-        const cols = action.payload;
+        const cols = action.payload.data;
 
         state.loading = false;
         state.error = undefined;
         state.collections = cols;
+        state.principal = action.payload.principal;
 
         state.totalCollectionsPrice = cols.reduce((a, b) => a + b.totalPrice, 0);
         state.numberOfTokens = cols.reduce((a, b) => a + b.tokens.length, 0);
@@ -93,7 +101,7 @@ export const collectionSlice = createSlice({
   },
 });
 
-export const { signPrincipal } = collectionSlice.actions;
+export const {} = collectionSlice.actions;
 export const collectionState = (state: RootState) => state.collection;
 
 export default collectionSlice.reducer;

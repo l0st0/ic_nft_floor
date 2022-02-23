@@ -1,5 +1,9 @@
 export const canisters = [
   {
+    canister: 'rw623-hyaaa-aaaah-qctcq-cai',
+    name: 'OG MEDALS',
+  },
+  {
     canister: 'xcep7-sqaaa-aaaah-qcukq-cai',
     name: '3D Assassins!!!',
   },
@@ -10,10 +14,6 @@ export const canisters = [
   {
     canister: 'r75rh-rqaaa-aaaah-qctda-cai',
     name: 'Eleos',
-  },
-  {
-    canister: 'rw623-hyaaa-aaaah-qctcq-cai',
-    name: 'OG MEDALS',
   },
   {
     canister: 'qjwjm-eaaaa-aaaah-qctga-cai',
