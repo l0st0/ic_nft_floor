@@ -11,14 +11,14 @@ export const Home = () => {
   if (loadingListings || loadingPrice)
     return (
       <Stack alignItems='center' spacing={2}>
-        <CircularProgress color='inherit' /> <span>Getting listings...</span>
+        <CircularProgress /> <span>Getting listings...</span>
       </Stack>
     );
 
   if (loading)
     return (
       <Stack alignItems='center' spacing={2}>
-        <CircularProgress color='inherit' /> <span>Getting collections...</span>
+        <CircularProgress /> <span>Getting collections...</span>
       </Stack>
     );
 

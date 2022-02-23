@@ -1,12 +1,12 @@
 import { PaletteMode } from '@mui/material';
 import darkScrollbar from '@mui/material/darkScrollbar';
-import { indigo } from '@mui/material/colors';
+import { blueGrey } from '@mui/material/colors';
 
 export const getDesignTokens = (mode: PaletteMode) => ({
   palette: {
     mode,
-    primary: indigo,
-    secondary: indigo,
+    primary: blueGrey,
+    secondary: blueGrey,
     ...(mode === 'light' ? {} : {}),
   },
 

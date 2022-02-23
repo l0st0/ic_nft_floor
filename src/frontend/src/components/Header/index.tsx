@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, FormControlLabel, Stack, TextField, Checkbox } from '@mui/material';
+import { Button, Stack, TextField } from '@mui/material';
 import useComponentSize from '@rehooks/component-size';
 import { ThemeButton } from '../ThemeButton';
 import { useAppDispatch, useAppSelector } from '../../hooks';
@@ -7,6 +7,7 @@ import { getAllData } from '../../store/actions';
 import { Controller, useForm } from 'react-hook-form';
 import { DfinityBadge } from '../DfinityBadge';
 import { StyledMainHeading } from './styles';
+import { SocialButton } from '../SocialButton';
 
 interface Form {
   principal: string;
@@ -34,7 +35,10 @@ export const Header = () => {
     <>
       <Stack display='flex' justifyContent='space-between' alignItems='center' flexDirection='row'>
         <DfinityBadge />
-        <ThemeButton />
+        <Stack flexDirection='row'>
+          <SocialButton />
+          <ThemeButton />
+        </Stack>
       </Stack>
 
       <Stack display='flex' alignItems='center' width='100%' padding={3} mb={1} textAlign='center'>

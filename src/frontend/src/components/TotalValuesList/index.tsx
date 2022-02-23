@@ -6,7 +6,7 @@ export const TotalValuesList = () => {
   const { price } = useAppSelector((state) => state.price);
 
   return (
-    <Grid container justifyContent='center' spacing={4} rowSpacing={1} pb={2}>
+    <Grid container justifyContent='center' spacing={6} rowSpacing={1} mb={3} mt={1}>
       <Grid item>
         <Typography fontSize={18} fontWeight={600} component='span' variant='body2' color='text.primary'>
           Tokens

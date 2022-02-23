@@ -1,10 +1,8 @@
 import React from 'react';
 import { IconButton, Menu, ToggleButton } from '@mui/material';
-
-import Brightness6Icon from '@mui/icons-material/Brightness6';
+import LightModeIcon from '@mui/icons-material/LightMode';
+import NightsStayIcon from '@mui/icons-material/NightsStay';
 import SettingsIcon from '@mui/icons-material/Settings';
-import NightlightRoundIcon from '@mui/icons-material/NightlightRound';
-import WbSunnyIcon from '@mui/icons-material/WbSunny';
 import { StyledToggleButtonGroup } from './styles';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { ModeType } from '../../types';
@@ -12,7 +10,7 @@ import { changeTheme } from '../../store/darkMode/dakrModeSlice';
 
 export const ThemeButton = () => {
   const dispatch = useAppDispatch();
-  const { theme } = useAppSelector((state) => state.darkMode);
+  const { theme, mode } = useAppSelector((state) => state.darkMode);
 
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
@@ -38,9 +36,8 @@ export const ThemeButton = () => {
         aria-haspopup='true'
         aria-expanded={open ? 'true' : undefined}
         onClick={handleClick}
-        color='inherit'
       >
-        <Brightness6Icon />
+        {mode === 'dark' ? <NightsStayIcon color='primary' /> : <LightModeIcon color='primary' />}
       </IconButton>
 
       <Menu
@@ -68,11 +65,11 @@ export const ThemeButton = () => {
             <span>System</span>
           </ToggleButton>
           <ToggleButton onClick={() => onModeChange('dark')} size='small' value='dark' aria-label='module'>
-            <NightlightRoundIcon fontSize='small' sx={{ mr: 1 }} />
+            <NightsStayIcon fontSize='small' sx={{ mr: 1 }} />
             <span>Dark</span>
           </ToggleButton>
           <ToggleButton onClick={() => onModeChange('light')} size='small' value='light' aria-label='quilt'>
-            <WbSunnyIcon fontSize='small' sx={{ mr: 1 }} />
+            <LightModeIcon fontSize='small' sx={{ mr: 1 }} />
             <span>Light</span>
           </ToggleButton>
         </StyledToggleButtonGroup>
