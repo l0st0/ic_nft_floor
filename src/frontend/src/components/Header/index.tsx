@@ -20,6 +20,7 @@ export const Header = () => {
   const dispatch = useAppDispatch();
   const { loading, principal: principalID } = useAppSelector((state) => state.collection);
   const { loading: listingLoading } = useAppSelector((state) => state.listing);
+  const { loading: priceLoading } = useAppSelector((state) => state.price);
 
   const headingRef = React.useRef(null);
   const { width } = useComponentSize(headingRef);
@@ -32,8 +33,6 @@ export const Header = () => {
   } = useForm<Form>();
 
   const onSubmit = async ({ principal }: Form) => {
-    dispatch(getPrice());
-    await dispatch(getListings());
     await dispatch(getCollections({ principal }));
   };
 
@@ -83,7 +82,7 @@ export const Header = () => {
                 <TextField
                   autoFocus
                   fullWidth
-                  disabled={loading || listingLoading}
+                  disabled={loading || listingLoading || priceLoading}
                   id='principalInput'
                   placeholder='Enter your principal'
                   variant='outlined'
@@ -101,7 +100,7 @@ export const Header = () => {
             />
 
             <Button
-              disabled={loading || listingLoading}
+              disabled={loading || listingLoading || priceLoading}
               type='submit'
               variant='contained'
               sx={{ m: '0 !important', maxHeight: 40, minWidth: 0 }}

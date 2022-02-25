@@ -1,6 +1,7 @@
 import { callCanister, getActor } from '../../utils/boundary';
 import { canisters } from '../../data/canisters';
 import { PromisePool } from '@supercharge/promise-pool';
+import { backend } from '../../../../declarations/backend';
 
 //@ts-ignore
 import { idlFactory } from '../../dids/ape.did';
@@ -23,6 +24,20 @@ const getListingData = async () => {
 
   if (errors.length) {
     console.log('errors', errors);
+  }
+
+  try {
+    const hours = new Date().getHours();
+    const newD = new Date().setHours(hours, 0, 0, 0);
+    const date = new Date(newD).toISOString();
+
+    const exists = await backend.getStatByKey(date);
+
+    if (!exists.length && results.length) {
+      await backend.addStats({ data: results, time: date });
+    }
+  } catch (error) {
+    console.log(error);
   }
 
   return results;

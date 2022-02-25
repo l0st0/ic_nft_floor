@@ -1,28 +1,49 @@
+import Map "mo:base/HashMap";
+import Iter "mo:base/Iter";
 import Float "mo:base/Float";
+import Text "mo:base/Text";
+import Types "Types"; 
 
 actor {
-    public type PriceData = {
-        price: Float;
-        date: Text;
-    };
-
-    stable var priceData: PriceData = {
+    stable var priceData: Types.PriceData = {
         price = 0;
         date = "";
     };
 
-    public query func getPrice() : async PriceData {
+    public query func getPrice() : async Types.PriceData {
         return priceData;
     };
 
-    public func updatePrice(actualPrice: Float, today: Text) : async  PriceData {
-        let toReturn: PriceData = {
-            price = actualPrice;
-            date = today;
-        };
+    public func updatePrice(data: Types.PriceData) : async  Types.PriceData {
+        priceData := data;
 
-        priceData := toReturn;
+        return data;
+    };
 
-        return toReturn;
-    }
-}
+    // Stats
+    stable var entriesStats : [(Text, Types.Stats)] = [];
+    let mapStats = Map.fromIter<Text,Types.Stats>(entriesStats.vals(), 10, Text.equal, Text.hash);
+
+    public func addStats(data: Types.Stats): async () {
+        mapStats.put(data.time, data);
+    };
+
+    public query func getStatByKey(time: Text) : async ?Types.Stats {
+        return mapStats.get(time);
+    };
+
+    public query func getStats() : async [Types.Stats] {
+        var iter: Iter.Iter<Types.Stats> = mapStats.vals();
+        
+        return Iter.toArray(iter);
+    };
+
+    system func preupgrade() {
+        entriesStats := Iter.toArray(mapStats.entries());
+    };
+
+    system func postupgrade() {
+        entriesStats := [];
+    };
+};
+ 

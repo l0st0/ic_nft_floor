@@ -21,7 +21,7 @@ const getPriceData = async () => {
   const futureDate = new Date(now.getTime() + 1 * 60000).toISOString();
 
   try {
-    await backend.updatePrice(Number(usd), futureDate);
+    await backend.updatePrice({ price: Number(usd), date: futureDate });
   } catch (error) {
     console.log(error);
   }

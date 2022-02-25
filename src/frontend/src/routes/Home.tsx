@@ -8,7 +8,14 @@ export const Home = () => {
   const { loading: loadingListings, error: listingError } = useAppSelector((state) => state.listing);
   const { error: priceError, loading: loadingPrice } = useAppSelector((state) => state.price);
 
-  if (loadingListings || loadingPrice)
+  if (loadingPrice)
+    return (
+      <Stack alignItems='center' spacing={2}>
+        <CircularProgress /> <span>Getting price...</span>
+      </Stack>
+    );
+
+  if (loadingListings)
     return (
       <Stack alignItems='center' spacing={2}>
         <CircularProgress /> <span>Getting listings...</span>
