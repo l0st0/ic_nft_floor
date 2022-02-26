@@ -1,6 +1,6 @@
 import { CircularProgress, Stack } from '@mui/material';
 import { NftList } from '../components/NftList';
-import { TotalValuesList } from '../components/TotalValuesList';
+import { TotalIcpValue } from '../components/TotalIcpValue';
 import { useAppSelector } from '../hooks';
 
 export const Home = () => {
@@ -23,12 +23,12 @@ export const Home = () => {
       </Stack>
     );
 
-  // if (loadingStats)
-  //   return (
-  //     <Stack alignItems='center' spacing={2}>
-  //       <CircularProgress /> <span>Getting stats...</span>
-  //     </Stack>
-  //   );
+  if (loadingStats)
+    return (
+      <Stack alignItems='center' spacing={2}>
+        <CircularProgress /> <span>Getting stats...</span>
+      </Stack>
+    );
 
   if (loading)
     return (
@@ -55,7 +55,7 @@ export const Home = () => {
 
   return (
     <>
-      <TotalValuesList />
+      <TotalIcpValue />
       <NftList />
     </>
   );

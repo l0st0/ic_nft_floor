@@ -2,6 +2,7 @@ import Map "mo:base/HashMap";
 import Iter "mo:base/Iter";
 import Float "mo:base/Float";
 import Text "mo:base/Text";
+import Nat "mo:base/Nat";
 import Types "Types"; 
 
 actor {
@@ -24,12 +25,16 @@ actor {
     stable var entriesStats : [(Text, Types.Stats)] = [];
     let mapStats = Map.fromIter<Text,Types.Stats>(entriesStats.vals(), 10, Text.equal, Text.hash);
 
+    var id = Nat.toText(mapStats.size());
+
     public func addStats(data: Types.Stats): async () {
-        mapStats.put(data.time, data);
+        var id = Nat.toText(mapStats.size() + 1);
+        mapStats.put(id, data);
     };
 
-    public query func getStatByKey(time: Text) : async ?Types.Stats {
-        return mapStats.get(time);
+    public query func getLastStat() : async ?Types.Stats {
+        var id = Nat.toText(mapStats.size());
+        return mapStats.get(id);
     };
 
     public query func getStats() : async [Types.Stats] {

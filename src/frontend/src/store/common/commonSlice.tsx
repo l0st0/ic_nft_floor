@@ -6,6 +6,7 @@ import { ModeType } from '../../types';
 interface CommonState {
   theme: ModeType;
   mode: PaletteMode;
+  showIcp: boolean;
   headerWidth: number;
 }
 
@@ -24,6 +25,7 @@ const getMode = () => {
 const initialState: CommonState = {
   theme: (localStorage.getItem('mode') as ModeType) || 'system',
   mode: getMode(),
+  showIcp: true,
   headerWidth: 0,
 };
 
@@ -41,13 +43,16 @@ export const commonSlice = createSlice({
         state.mode = action.payload;
       }
     },
+    toggleShowIcp: (state, action: PayloadAction<boolean>) => {
+      state.showIcp = action.payload;
+    },
     signHeaderWidth: (state, action: PayloadAction<number>) => {
       state.headerWidth = action.payload;
     },
   },
 });
 
-export const { changeTheme, signHeaderWidth } = commonSlice.actions;
+export const { changeTheme, signHeaderWidth, toggleShowIcp } = commonSlice.actions;
 export const darkModeState = (state: RootState) => state.common;
 
 export default commonSlice.reducer;

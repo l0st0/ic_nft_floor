@@ -20,7 +20,7 @@ function App() {
   React.useEffect(() => {
     const get = async () => {
       try {
-        // await dispatch(getPrice());
+        dispatch(getPrice());
         await dispatch(getListings());
         await dispatch(getStats());
       } catch (error) {

@@ -2,6 +2,552 @@ export const stats = [
   {
     data: [
       {
+        price: 5.9,
+        canisterId: 'y3b7h-siaaa-aaaah-qcnwa-cai',
+      },
+      {
+        price: 334,
+        canisterId: 'pk6rk-6aaaa-aaaae-qaazq-cai',
+      },
+      {
+        price: 13.99,
+        canisterId: 'z7mqv-liaaa-aaaah-qcnqa-cai',
+      },
+      {
+        price: 15,
+        canisterId: '7gvfz-3iaaa-aaaah-qcsbq-cai',
+      },
+      {
+        price: 7.05,
+        canisterId: 'xphpx-xyaaa-aaaah-qcmta-cai',
+      },
+      {
+        price: 8,
+        canisterId: 'jntyp-yiaaa-aaaah-qcr3q-cai',
+      },
+      {
+        price: 5.98,
+        canisterId: 'qjwjm-eaaaa-aaaah-qctga-cai',
+      },
+      {
+        price: 8.47,
+        canisterId: '5h2fc-zaaaa-aaaah-qcnjq-cai',
+      },
+      {
+        price: 2.1,
+        canisterId: 'poyn6-dyaaa-aaaah-qcfzq-cai',
+      },
+      {
+        price: 29,
+        canisterId: 'bzsui-sqaaa-aaaah-qce2a-cai',
+      },
+      {
+        price: 194,
+        canisterId: 'mk3kn-pyaaa-aaaah-qcoda-cai',
+      },
+      {
+        price: 17,
+        canisterId: 'txr2a-fqaaa-aaaah-qcmkq-cai',
+      },
+      {
+        price: 26,
+        canisterId: 'vj752-6iaaa-aaaah-qcm6a-cai',
+      },
+      {
+        price: 10.19,
+        canisterId: 'zvycl-fyaaa-aaaah-qckmq-cai',
+      },
+      {
+        price: 28.38,
+        canisterId: 'r75rh-rqaaa-aaaah-qctda-cai',
+      },
+      {
+        price: 10.41,
+        canisterId: 'ahl3d-xqaaa-aaaaj-qacca-cai',
+      },
+      {
+        price: 5.89,
+        canisterId: 'gyuaf-kqaaa-aaaah-qceka-cai',
+      },
+      {
+        price: 16.5,
+        canisterId: 'njgly-uaaaa-aaaah-qb6pa-cai',
+      },
+      {
+        price: 46.9,
+        canisterId: 'oeee4-qaaaa-aaaak-qaaeq-cai',
+      },
+      {
+        price: 23,
+        canisterId: 'er7d4-6iaaa-aaaaj-qac2q-cai',
+      },
+      {
+        price: 25,
+        canisterId: 'nges7-giaaa-aaaaj-qaiya-cai',
+      },
+      {
+        price: 19,
+        canisterId: 't2eok-gyaaa-aaaah-qclwq-cai',
+      },
+      {
+        price: 19.59,
+        canisterId: 'erpx2-pyaaa-aaaah-qcqsq-cai',
+      },
+      {
+        price: 15.4,
+        canisterId: 'bkvll-jiaaa-aaaah-qcqnq-cai',
+      },
+      {
+        price: 78,
+        canisterId: 'xcep7-sqaaa-aaaah-qcukq-cai',
+      },
+      {
+        price: 4.59,
+        canisterId: 'jeghr-iaaaa-aaaah-qco7q-cai',
+      },
+      {
+        price: 9.25,
+        canisterId: 'p5jg7-6aaaa-aaaah-qcolq-cai',
+      },
+      {
+        price: 11.2,
+        canisterId: 'zejmq-rqaaa-aaaah-qcnsq-cai',
+      },
+      {
+        price: 7.5,
+        canisterId: 'jmuqr-yqaaa-aaaaj-qaicq-cai',
+      },
+      {
+        price: 6,
+        canisterId: 'b5el6-hqaaa-aaaah-qcdhq-cai',
+      },
+      {
+        price: 1.5,
+        canisterId: 'btggw-4aaaa-aaaah-qcdgq-cai',
+      },
+      {
+        price: 23,
+        canisterId: '73xld-saaaa-aaaah-qbjya-cai',
+      },
+      {
+        price: 7.18,
+        canisterId: '3db6u-aiaaa-aaaah-qbjbq-cai',
+      },
+      {
+        price: 7.93,
+        canisterId: '4kubm-wiaaa-aaaah-qcnoa-cai',
+      },
+      {
+        price: 8.79,
+        canisterId: 'unssi-hiaaa-aaaah-qcmya-cai',
+      },
+      {
+        price: 29.8,
+        canisterId: 'k4qsa-4aaaa-aaaah-qbvnq-cai',
+      },
+      {
+        price: 90,
+        canisterId: 'uzhxd-ziaaa-aaaah-qanaq-cai',
+      },
+      {
+        price: 7.15,
+        canisterId: 'gevsk-tqaaa-aaaah-qaoca-cai',
+      },
+      {
+        price: 6.04,
+        canisterId: 'ctt6t-faaaa-aaaah-qcpbq-cai',
+      },
+      {
+        price: 9.53,
+        canisterId: 'xzxhy-oiaaa-aaaah-qclnq-cai',
+      },
+      {
+        price: 1.88,
+        canisterId: 'dknxi-2iaaa-aaaah-qceuq-cai',
+      },
+      {
+        price: 13.9,
+        canisterId: 'px5ub-qqaaa-aaaah-qcjxa-cai',
+      },
+      {
+        price: 9.4,
+        canisterId: '3ifmd-wqaaa-aaaah-qckda-cai',
+      },
+      {
+        price: 7.7,
+        canisterId: '3mttv-dqaaa-aaaah-qcn6q-cai',
+      },
+      {
+        price: 11.8,
+        canisterId: 'nbg4r-saaaa-aaaah-qap7a-cai',
+      },
+      {
+        price: 2.67,
+        canisterId: 'ep54t-xiaaa-aaaah-qcdza-cai',
+      },
+      {
+        price: 35.99,
+        canisterId: 'ag2h7-riaaa-aaaah-qce6q-cai',
+      },
+      {
+        price: 3.54,
+        canisterId: '2iiif-4qaaa-aaaah-qcs5a-cai',
+      },
+      {
+        price: 5.89,
+        canisterId: 'nfvlz-jaaaa-aaaah-qcciq-cai',
+      },
+      {
+        price: 503,
+        canisterId: 'dv6u3-vqaaa-aaaah-qcdlq-cai',
+      },
+      {
+        price: 9.8,
+        canisterId: 'sr4qi-vaaaa-aaaah-qcaaq-cai',
+      },
+      {
+        price: 6.69,
+        canisterId: 'owuqd-dyaaa-aaaah-qapxq-cai',
+      },
+      {
+        price: 13.59,
+        canisterId: 'v3zkd-syaaa-aaaah-qcm5a-cai',
+      },
+      {
+        price: 12.89,
+        canisterId: 'q6hjz-kyaaa-aaaah-qcama-cai',
+      },
+      {
+        price: 510,
+        canisterId: 'crt3j-mqaaa-aaaah-qcdnq-cai',
+      },
+      {
+        price: 112,
+        canisterId: 'rw623-hyaaa-aaaah-qctcq-cai',
+      },
+      {
+        price: 7,
+        canisterId: 'cdvmq-aaaaa-aaaah-qcdoq-cai',
+      },
+      {
+        price: 6.4,
+        canisterId: 'bid2t-gyaaa-aaaah-qcdea-cai',
+      },
+      {
+        price: 9.9,
+        canisterId: 'dylar-wyaaa-aaaah-qcexq-cai',
+      },
+      {
+        price: 17.5,
+        canisterId: 'e3izy-jiaaa-aaaah-qacbq-cai',
+      },
+      {
+        price: 35,
+        canisterId: 'bxdf4-baaaa-aaaah-qaruq-cai',
+      },
+      {
+        price: 13.42,
+        canisterId: 'eb7r3-myaaa-aaaah-qcdya-cai',
+      },
+      {
+        price: 506,
+        canisterId: 'cnxby-3qaaa-aaaah-qcdpq-cai',
+      },
+      {
+        price: 2.02,
+        canisterId: 'tde7l-3qaaa-aaaah-qansa-cai',
+      },
+      {
+        price: 23,
+        canisterId: 'kss7i-hqaaa-aaaah-qbvmq-cai',
+      },
+      {
+        price: 24.44,
+        canisterId: 'ckwhm-wiaaa-aaaah-qcdpa-cai',
+      },
+      {
+        price: 23,
+        canisterId: 'pnpu4-3aaaa-aaaah-qcceq-cai',
+      },
+    ],
+    time: '2022-02-27T15:00:00.000Z',
+  },
+  {
+    data: [
+      {
+        price: 5.9,
+        canisterId: 'y3b7h-siaaa-aaaah-qcnwa-cai',
+      },
+      {
+        price: 334,
+        canisterId: 'pk6rk-6aaaa-aaaae-qaazq-cai',
+      },
+      {
+        price: 13.99,
+        canisterId: 'z7mqv-liaaa-aaaah-qcnqa-cai',
+      },
+      {
+        price: 15,
+        canisterId: '7gvfz-3iaaa-aaaah-qcsbq-cai',
+      },
+      {
+        price: 7.05,
+        canisterId: 'xphpx-xyaaa-aaaah-qcmta-cai',
+      },
+      {
+        price: 8,
+        canisterId: 'jntyp-yiaaa-aaaah-qcr3q-cai',
+      },
+      {
+        price: 5.98,
+        canisterId: 'qjwjm-eaaaa-aaaah-qctga-cai',
+      },
+      {
+        price: 8.47,
+        canisterId: '5h2fc-zaaaa-aaaah-qcnjq-cai',
+      },
+      {
+        price: 2.1,
+        canisterId: 'poyn6-dyaaa-aaaah-qcfzq-cai',
+      },
+      {
+        price: 29,
+        canisterId: 'bzsui-sqaaa-aaaah-qce2a-cai',
+      },
+      {
+        price: 194,
+        canisterId: 'mk3kn-pyaaa-aaaah-qcoda-cai',
+      },
+      {
+        price: 17,
+        canisterId: 'txr2a-fqaaa-aaaah-qcmkq-cai',
+      },
+      {
+        price: 26,
+        canisterId: 'vj752-6iaaa-aaaah-qcm6a-cai',
+      },
+      {
+        price: 10.19,
+        canisterId: 'zvycl-fyaaa-aaaah-qckmq-cai',
+      },
+      {
+        price: 28.38,
+        canisterId: 'r75rh-rqaaa-aaaah-qctda-cai',
+      },
+      {
+        price: 10.41,
+        canisterId: 'ahl3d-xqaaa-aaaaj-qacca-cai',
+      },
+      {
+        price: 5.89,
+        canisterId: 'gyuaf-kqaaa-aaaah-qceka-cai',
+      },
+      {
+        price: 16.5,
+        canisterId: 'njgly-uaaaa-aaaah-qb6pa-cai',
+      },
+      {
+        price: 46.9,
+        canisterId: 'oeee4-qaaaa-aaaak-qaaeq-cai',
+      },
+      {
+        price: 23,
+        canisterId: 'er7d4-6iaaa-aaaaj-qac2q-cai',
+      },
+      {
+        price: 25,
+        canisterId: 'nges7-giaaa-aaaaj-qaiya-cai',
+      },
+      {
+        price: 19,
+        canisterId: 't2eok-gyaaa-aaaah-qclwq-cai',
+      },
+      {
+        price: 19.59,
+        canisterId: 'erpx2-pyaaa-aaaah-qcqsq-cai',
+      },
+      {
+        price: 15.4,
+        canisterId: 'bkvll-jiaaa-aaaah-qcqnq-cai',
+      },
+      {
+        price: 78,
+        canisterId: 'xcep7-sqaaa-aaaah-qcukq-cai',
+      },
+      {
+        price: 4.59,
+        canisterId: 'jeghr-iaaaa-aaaah-qco7q-cai',
+      },
+      {
+        price: 9.25,
+        canisterId: 'p5jg7-6aaaa-aaaah-qcolq-cai',
+      },
+      {
+        price: 11.2,
+        canisterId: 'zejmq-rqaaa-aaaah-qcnsq-cai',
+      },
+      {
+        price: 7.5,
+        canisterId: 'jmuqr-yqaaa-aaaaj-qaicq-cai',
+      },
+      {
+        price: 6,
+        canisterId: 'b5el6-hqaaa-aaaah-qcdhq-cai',
+      },
+      {
+        price: 1.5,
+        canisterId: 'btggw-4aaaa-aaaah-qcdgq-cai',
+      },
+      {
+        price: 23,
+        canisterId: '73xld-saaaa-aaaah-qbjya-cai',
+      },
+      {
+        price: 7.18,
+        canisterId: '3db6u-aiaaa-aaaah-qbjbq-cai',
+      },
+      {
+        price: 7.93,
+        canisterId: '4kubm-wiaaa-aaaah-qcnoa-cai',
+      },
+      {
+        price: 8.79,
+        canisterId: 'unssi-hiaaa-aaaah-qcmya-cai',
+      },
+      {
+        price: 29.8,
+        canisterId: 'k4qsa-4aaaa-aaaah-qbvnq-cai',
+      },
+      {
+        price: 90,
+        canisterId: 'uzhxd-ziaaa-aaaah-qanaq-cai',
+      },
+      {
+        price: 7.15,
+        canisterId: 'gevsk-tqaaa-aaaah-qaoca-cai',
+      },
+      {
+        price: 6.04,
+        canisterId: 'ctt6t-faaaa-aaaah-qcpbq-cai',
+      },
+      {
+        price: 9.53,
+        canisterId: 'xzxhy-oiaaa-aaaah-qclnq-cai',
+      },
+      {
+        price: 1.88,
+        canisterId: 'dknxi-2iaaa-aaaah-qceuq-cai',
+      },
+      {
+        price: 13.9,
+        canisterId: 'px5ub-qqaaa-aaaah-qcjxa-cai',
+      },
+      {
+        price: 9.4,
+        canisterId: '3ifmd-wqaaa-aaaah-qckda-cai',
+      },
+      {
+        price: 7.7,
+        canisterId: '3mttv-dqaaa-aaaah-qcn6q-cai',
+      },
+      {
+        price: 11.8,
+        canisterId: 'nbg4r-saaaa-aaaah-qap7a-cai',
+      },
+      {
+        price: 2.67,
+        canisterId: 'ep54t-xiaaa-aaaah-qcdza-cai',
+      },
+      {
+        price: 35.99,
+        canisterId: 'ag2h7-riaaa-aaaah-qce6q-cai',
+      },
+      {
+        price: 3.54,
+        canisterId: '2iiif-4qaaa-aaaah-qcs5a-cai',
+      },
+      {
+        price: 5.89,
+        canisterId: 'nfvlz-jaaaa-aaaah-qcciq-cai',
+      },
+      {
+        price: 503,
+        canisterId: 'dv6u3-vqaaa-aaaah-qcdlq-cai',
+      },
+      {
+        price: 9.8,
+        canisterId: 'sr4qi-vaaaa-aaaah-qcaaq-cai',
+      },
+      {
+        price: 6.69,
+        canisterId: 'owuqd-dyaaa-aaaah-qapxq-cai',
+      },
+      {
+        price: 13.59,
+        canisterId: 'v3zkd-syaaa-aaaah-qcm5a-cai',
+      },
+      {
+        price: 12.89,
+        canisterId: 'q6hjz-kyaaa-aaaah-qcama-cai',
+      },
+      {
+        price: 510,
+        canisterId: 'crt3j-mqaaa-aaaah-qcdnq-cai',
+      },
+      {
+        price: 112,
+        canisterId: 'rw623-hyaaa-aaaah-qctcq-cai',
+      },
+      {
+        price: 7,
+        canisterId: 'cdvmq-aaaaa-aaaah-qcdoq-cai',
+      },
+      {
+        price: 6.4,
+        canisterId: 'bid2t-gyaaa-aaaah-qcdea-cai',
+      },
+      {
+        price: 9.9,
+        canisterId: 'dylar-wyaaa-aaaah-qcexq-cai',
+      },
+      {
+        price: 17.5,
+        canisterId: 'e3izy-jiaaa-aaaah-qacbq-cai',
+      },
+      {
+        price: 35,
+        canisterId: 'bxdf4-baaaa-aaaah-qaruq-cai',
+      },
+      {
+        price: 13.42,
+        canisterId: 'eb7r3-myaaa-aaaah-qcdya-cai',
+      },
+      {
+        price: 506,
+        canisterId: 'cnxby-3qaaa-aaaah-qcdpq-cai',
+      },
+      {
+        price: 2.02,
+        canisterId: 'tde7l-3qaaa-aaaah-qansa-cai',
+      },
+      {
+        price: 23,
+        canisterId: 'kss7i-hqaaa-aaaah-qbvmq-cai',
+      },
+      {
+        price: 24.44,
+        canisterId: 'ckwhm-wiaaa-aaaah-qcdpa-cai',
+      },
+      {
+        price: 23,
+        canisterId: 'pnpu4-3aaaa-aaaah-qcceq-cai',
+      },
+    ],
+    time: '2022-02-27T07:00:00.000Z',
+  },
+  {
+    data: [
+      {
         price: 0.54,
         canisterId: '2iiif-4qaaa-aaaah-qcs5a-cai',
       },

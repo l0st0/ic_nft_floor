@@ -21,7 +21,7 @@ const getListingData = async () => {
 
       return {
         canisterId: can.canister,
-        price /* : Number((price - Math.floor(Math.random() * 10) + 1).toFixed(2)) */,
+        price: price /* + Math.floor(Math.random() * (10 - -10 + 1)) + -10 */,
       };
     });
 
@@ -30,24 +30,15 @@ const getListingData = async () => {
   }
 
   try {
-    const hours = new Date().getHours();
-    let h = 24;
+    const getLastStat = await backend.getLastStat();
 
-    if (hours <= 8) {
-      h = 8;
-    } else if (hours > 8 && hours <= 16) {
-      h = 16;
-    } else {
-      h = 24;
-    }
+    const newDate = new Date().getTime();
+    const oneH = 60 * 60 * 1000;
 
-    const newD = new Date().setHours(h, 0, 0, 0);
-    const date = new Date(newD).toISOString();
+    const lastAdded = Number(getLastStat[0]?.time);
 
-    const exists = await backend.getStatByKey(date);
-
-    if (!exists.length && results.length) {
-      await backend.addStats({ data: results, time: date });
+    if (!lastAdded || lastAdded + oneH < newDate) {
+      await backend.addStats({ data: results, time: newDate.toString() });
     }
   } catch (error) {
     console.log(error);

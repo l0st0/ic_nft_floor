@@ -4,11 +4,17 @@ import { ModNFTCollectionType } from '../../types';
 import { getListings } from '../listing/listingSlice';
 import { getPrice } from '../price/priceSlice';
 import collectionService from './collectionService';
+// import { collections } from '../../data/dummy';
 
 interface CollectionState {
   collections: ModNFTCollectionType[];
   numberOfTokens: number;
-  totalCollectionsPrice: number;
+  totalCollectionsPrice: {
+    actual: number;
+    oneHour: number;
+    day: number;
+    week: number;
+  };
   principal: string;
   loading: boolean;
   checking: boolean;
@@ -18,7 +24,12 @@ interface CollectionState {
 const initialState: CollectionState = {
   collections: [],
   numberOfTokens: 0,
-  totalCollectionsPrice: 0,
+  totalCollectionsPrice: {
+    actual: 0,
+    oneHour: 0,
+    day: 0,
+    week: 0,
+  },
   principal: '',
   loading: false,
   checking: false,
@@ -39,6 +50,7 @@ export const getCollections = createAsyncThunk<
 
     let { listings } = getState().listing;
     const { price } = getState().price;
+    const { stats } = getState().stats;
 
     if (!listings.length) {
       listings = await dispatch(getListings()).unwrap();
@@ -52,6 +64,12 @@ export const getCollections = createAsyncThunk<
       .map((item) => {
         const listingData = listings.find((data) => data.canisterId === item.canisterId);
 
+        const filterStats = stats.map((stat) => {
+          const filterData = stat.data.filter(({ canisterId }) => canisterId === item.canisterId);
+
+          return { time: stat.time, price: filterData[0]?.price * item.tokens.length };
+        });
+
         let floorPrice = 0;
         let totalPrice = 0;
 
@@ -60,7 +78,7 @@ export const getCollections = createAsyncThunk<
           totalPrice = listingData.price * item.tokens.length;
         }
 
-        return { ...item, floorPrice, totalPrice };
+        return { ...item, floorPrice, totalPrice, stats: filterStats };
       })
       .sort((a, b) => b.totalPrice - a.totalPrice);
 
@@ -89,7 +107,12 @@ export const collectionSlice = createSlice({
         state.collections = cols;
         state.principal = action.payload.principal;
 
-        state.totalCollectionsPrice = cols.reduce((a, b) => a + b.totalPrice, 0);
+        state.totalCollectionsPrice = {
+          actual: cols.reduce((a, b) => a + b.totalPrice, 0),
+          oneHour: cols.reduce((a, b) => a + b.stats[1]?.price || 0, 0),
+          day: cols.reduce((a, b) => a + b.stats[24]?.price || 0, 0),
+          week: cols.reduce((a, b) => a + b.stats[168]?.price || 0, 0),
+        };
         state.numberOfTokens = cols.reduce((a, b) => a + b.tokens.length, 0);
       })
       .addCase(getCollections.rejected, (state, action) => {

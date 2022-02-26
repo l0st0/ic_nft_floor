@@ -55,3 +55,14 @@ export const sortCollection = (col: ModNFTCollectionType[]): ModNFTCollectionTyp
     return { ...sortItems, tokens };
   });
 };
+
+export const formatPrice = (price: number, digits = 0, currency = false) => {
+  const options: { style?: string; currency?: string } = {};
+
+  if (currency) {
+    options.style = 'currency';
+    options.currency = 'USD';
+  }
+
+  return price.toLocaleString('en-US', { ...options, maximumFractionDigits: digits });
+};

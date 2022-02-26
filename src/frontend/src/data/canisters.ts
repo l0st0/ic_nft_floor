@@ -1,5 +1,9 @@
 export const canisters = [
   {
+    canister: 'tgwaz-xyaaa-aaaah-qcura-cai',
+    name: 'Frontliners',
+  },
+  {
     canister: 'rw623-hyaaa-aaaah-qctcq-cai',
     name: 'OG MEDALS',
   },

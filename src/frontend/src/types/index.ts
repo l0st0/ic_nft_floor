@@ -19,6 +19,10 @@ export type ModNFTCollectionType = Pick<NFTCollection, 'name' | 'canisterId' | '
   tokens: TokensType[];
   floorPrice: number;
   totalPrice: number;
+  stats: {
+    time: string;
+    price: number;
+  }[];
 };
 
 export interface ContextInterface {
