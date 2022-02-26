@@ -7,24 +7,22 @@ import ScrollToTop from './components/ScrollToTop';
 import { useAppDispatch, useAppSelector } from './hooks';
 import { createTheme } from '@mui/material';
 import { getDesignTokens } from './styles';
-import { backend } from '../../declarations/backend';
 import { getPrice } from './store/price/priceSlice';
 import { getListings } from './store/listing/listingSlice';
+import { getStats } from './store/stats/statsSlice';
 
 function App() {
-  const { mode } = useAppSelector((state) => state.darkMode);
+  const { mode } = useAppSelector((state) => state.common);
 
   const dispatch = useAppDispatch();
+  const { stats } = useAppSelector((state) => state.stats);
 
   React.useEffect(() => {
     const get = async () => {
       try {
-        await dispatch(getPrice());
+        // await dispatch(getPrice());
         await dispatch(getListings());
-
-        const stats = await backend.getStats();
-
-        console.log('stats', stats);
+        await dispatch(getStats());
       } catch (error) {
         console.log('error', error);
       }
@@ -32,6 +30,8 @@ function App() {
 
     get();
   }, []);
+
+  console.log('stats', stats);
 
   const muiTheme = React.useMemo(() => {
     return createTheme(getDesignTokens(mode));

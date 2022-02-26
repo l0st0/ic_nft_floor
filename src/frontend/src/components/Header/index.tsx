@@ -9,8 +9,7 @@ import { StyledMainHeading } from './styles';
 import { SocialButton } from '../SocialButton';
 import { getCollections } from '../../store/collection/collectionSlice';
 import { Refresh, Send } from '@mui/icons-material';
-import { getListings } from '../../store/listing/listingSlice';
-import { getPrice } from '../../store/price/priceSlice';
+import { signHeaderWidth } from '../../store/common/commonSlice';
 
 interface Form {
   principal: string;
@@ -24,6 +23,12 @@ export const Header = () => {
 
   const headingRef = React.useRef(null);
   const { width } = useComponentSize(headingRef);
+
+  React.useEffect(() => {
+    if (width) {
+      dispatch(signHeaderWidth(width));
+    }
+  }, [width]);
 
   const {
     control,

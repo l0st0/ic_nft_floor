@@ -6,11 +6,11 @@ import SettingsIcon from '@mui/icons-material/Settings';
 import { StyledToggleButtonGroup } from './styles';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { ModeType } from '../../types';
-import { changeTheme } from '../../store/darkMode/dakrModeSlice';
+import { changeTheme } from '../../store/common/commonSlice';
 
 export const ThemeButton = () => {
   const dispatch = useAppDispatch();
-  const { theme, mode } = useAppSelector((state) => state.darkMode);
+  const { theme, mode } = useAppSelector((state) => state.common);
 
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);

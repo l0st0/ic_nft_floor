@@ -7,6 +7,7 @@ export const Home = () => {
   const { loading, collections, error } = useAppSelector((state) => state.collection);
   const { loading: loadingListings, error: listingError } = useAppSelector((state) => state.listing);
   const { error: priceError, loading: loadingPrice } = useAppSelector((state) => state.price);
+  const { loading: loadingStats } = useAppSelector((state) => state.stats);
 
   if (loadingPrice)
     return (
@@ -21,6 +22,13 @@ export const Home = () => {
         <CircularProgress /> <span>Getting listings...</span>
       </Stack>
     );
+
+  // if (loadingStats)
+  //   return (
+  //     <Stack alignItems='center' spacing={2}>
+  //       <CircularProgress /> <span>Getting stats...</span>
+  //     </Stack>
+  //   );
 
   if (loading)
     return (

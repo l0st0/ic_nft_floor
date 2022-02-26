@@ -3,9 +3,10 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import type { RootState } from '..';
 import { ModeType } from '../../types';
 
-interface DarkModeState {
+interface CommonState {
   theme: ModeType;
   mode: PaletteMode;
+  headerWidth: number;
 }
 
 const prefersDarkMode = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
@@ -20,13 +21,14 @@ const getMode = () => {
   return getFromLocalStorage;
 };
 
-const initialState: DarkModeState = {
+const initialState: CommonState = {
   theme: (localStorage.getItem('mode') as ModeType) || 'system',
   mode: getMode(),
+  headerWidth: 0,
 };
 
-export const darkModeSlice = createSlice({
-  name: 'darkMode',
+export const commonSlice = createSlice({
+  name: 'common',
   initialState,
   reducers: {
     changeTheme: (state, action: PayloadAction<ModeType>) => {
@@ -39,10 +41,13 @@ export const darkModeSlice = createSlice({
         state.mode = action.payload;
       }
     },
+    signHeaderWidth: (state, action: PayloadAction<number>) => {
+      state.headerWidth = action.payload;
+    },
   },
 });
 
-export const { changeTheme } = darkModeSlice.actions;
-export const darkModeState = (state: RootState) => state.darkMode;
+export const { changeTheme, signHeaderWidth } = commonSlice.actions;
+export const darkModeState = (state: RootState) => state.common;
 
-export default darkModeSlice.reducer;
+export default commonSlice.reducer;

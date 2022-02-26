@@ -5,11 +5,18 @@ import { useAppSelector } from '../../hooks';
 export const NftList = () => {
   const { collections } = useAppSelector((state) => state.collection);
   const { price } = useAppSelector((state) => state.price);
-  const { mode } = useAppSelector((state) => state.darkMode);
+  const { stats } = useAppSelector((state) => state.stats);
+  const { mode } = useAppSelector((state) => state.common);
 
   return (
     <Grid container justifyContent='center' spacing={2} rowSpacing={-1}>
       {collections.map((item, index) => {
+        const filterStats = stats.map((stat) => {
+          const filterData = stat.data.filter(({ canisterId }) => canisterId === item.canisterId);
+
+          return { time: stat.time, price: filterData[0]?.price || 0 };
+        });
+
         return (
           <Grid key={index} item>
             <List sx={{ width: 280, maxWidth: 280, bgcolor: 'background.paper' }}>
