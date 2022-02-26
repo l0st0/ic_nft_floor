@@ -17,7 +17,7 @@ export const NftList = () => {
 
       <Grid container spacing={2} rowSpacing={-1}>
         {collections.map((item, index) => {
-          const oldPrice = item.stats[1]?.price || 0;
+          const oldPrice = item.stats[24]?.price || 0;
 
           const percent = oldPrice ? (1 - item.totalPrice / oldPrice) * 100 : 0;
 

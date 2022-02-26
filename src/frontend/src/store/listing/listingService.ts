@@ -30,15 +30,14 @@ const getListingData = async () => {
   }
 
   try {
-    const getLastStat = await backend.getLastStat();
+    const newDate = new Date();
+    const hour = newDate.getHours();
+    const date = newDate.setHours(hour, 0, 0, 0).toString();
 
-    const newDate = new Date().getTime();
-    const oneH = 60 * 60 * 1000;
+    const getStat = await backend.getLastStat();
 
-    const lastAdded = Number(getLastStat[0]?.time);
-
-    if (!lastAdded || lastAdded + oneH < newDate) {
-      await backend.addStats({ data: results, time: newDate.toString() });
+    if (!getStat.length || getStat[0]?.time !== date) {
+      await backend.addStats({ data: results, time: date });
     }
   } catch (error) {
     console.log(error);

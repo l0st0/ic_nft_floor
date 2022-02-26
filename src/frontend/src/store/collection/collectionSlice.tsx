@@ -49,15 +49,10 @@ export const getCollections = createAsyncThunk<
     if (!collections.length) return rejectWithValue('No collections found for this principal.');
 
     let { listings } = getState().listing;
-    const { price } = getState().price;
     const { stats } = getState().stats;
 
     if (!listings.length) {
       listings = await dispatch(getListings()).unwrap();
-    }
-
-    if (!price || price === 0) {
-      await dispatch(getPrice());
     }
 
     const data = collections
