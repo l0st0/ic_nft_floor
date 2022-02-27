@@ -1,7 +1,7 @@
 import { getAllUserNFTs } from '@psychedelic/dab-js';
 import { modifyCollection } from '../../utils';
 
-const removeFromList = ['vlhm2-4iaaa-aaaam-qaatq-cai', 'po6n2-uiaaa-aaaaj-qaiua-cai', 'lhq4n-3yaaa-aaaai-qaniq-cai'];
+const removeFromList = ['vlhm2-4iaaa-aaaam-qaatq-cai', 'lhq4n-3yaaa-aaaai-qaniq-cai'];
 
 const getCollections = async ({ principal }: { principal: string }) => {
   const fetchCollections = await getAllUserNFTs({ user: principal });

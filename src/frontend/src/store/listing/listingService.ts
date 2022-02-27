@@ -1,14 +1,31 @@
 import { callCanister, getActor } from '../../utils/boundary';
-import { canisters } from '../../data/canisters';
+// import { canisters } from '../../data/canisters';
 import { PromisePool } from '@supercharge/promise-pool';
 import { backend } from '../../../../declarations/backend';
 
 //@ts-ignore
 import { idlFactory } from '../../dids/ape.did';
+import axios from 'axios';
 
 const getListingData = async () => {
+  const _isCanister = (c: string) => {
+    return c.length == 27 && c.split('-').length == 5;
+  };
+
+  let collections = [];
+
+  try {
+    const { data }: { data: { id: string; name: string }[] } = await axios.get(
+      'https://us-central1-entrepot-api.cloudfunctions.net/api/collections'
+    );
+
+    collections = data.map((a) => ({ name: a.name, canister: a.id })).filter((a) => _isCanister(a.canister));
+  } catch (error) {
+    throw error;
+  }
+
   const { results, errors } = await PromisePool.withConcurrency(35)
-    .for(canisters)
+    .for(collections)
     .process(async (can, index, pool) => {
       const actor = getActor(idlFactory, can.canister);
       const response = await callCanister(actor, 'stats');
@@ -33,8 +50,8 @@ const getListingData = async () => {
     const newDate = new Date();
     const hour = newDate.getHours();
     const date = newDate.setHours(hour, 0, 0, 0).toString();
-    const ofset = new Date().getTimezoneOffset();
-    const allowOffset = ofset % 60 === 0;
+    const offset = new Date().getTimezoneOffset();
+    const allowOffset = offset % 60 === 0;
 
     if (allowOffset) {
       const getStat = await backend.getStat(date);

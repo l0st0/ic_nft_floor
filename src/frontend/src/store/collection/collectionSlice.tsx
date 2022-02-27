@@ -2,7 +2,6 @@ import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit';
 import type { RootState } from '..';
 import { ModNFTCollectionType } from '../../types';
 import { getListings } from '../listing/listingSlice';
-import { getPrice } from '../price/priceSlice';
 import collectionService from './collectionService';
 // import { collections } from '../../data/dummy';
 
@@ -59,10 +58,12 @@ export const getCollections = createAsyncThunk<
       .map((item) => {
         const listingData = listings.find((data) => data.canisterId === item.canisterId);
 
-        const filterStats = stats.map((stat) => {
+        const statData = stats.map((stat) => {
           const filterData = stat.data.filter(({ canisterId }) => canisterId === item.canisterId);
 
-          return { time: stat.time, price: filterData[0]?.price * item.tokens.length };
+          const price = filterData[0]?.price || 0;
+
+          return { time: stat.time, price: price * item.tokens.length };
         });
 
         let floorPrice = 0;
@@ -73,7 +74,7 @@ export const getCollections = createAsyncThunk<
           totalPrice = listingData.price * item.tokens.length;
         }
 
-        return { ...item, floorPrice, totalPrice, stats: filterStats };
+        return { ...item, floorPrice, totalPrice, stats: statData };
       })
       .sort((a, b) => b.totalPrice - a.totalPrice);
 

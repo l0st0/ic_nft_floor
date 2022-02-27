@@ -20,70 +20,6 @@ export const collections = [
         nri: '89.6',
       },
     ],
-    floorPrice: 366,
-    totalPrice: 1098,
-  },
-  {
-    name: 'Motoko Day Drop',
-    canisterId: 'oeee4-qaaaa-aaaak-qaaeq-cai',
-    icon: 'https://oeee4-qaaaa-aaaak-qaaeq-cai.raw.ic0.app/?cc=0&type=thumbnail&tokenid=w5txv-gakor-uwiaa-aaaaa-cuaab-eaqca-aadhc-a',
-    tokens: [
-      {
-        url: 'https://oeee4-qaaaa-aaaak-qaaeq-cai.raw.ic0.app/?type=thumbnail&tokenid=5nfhi-cikor-uwiaa-aaaaa-cuaab-eaqca-aad3o-a',
-        index: '7900',
-        nri: '89.9',
-      },
-      {
-        url: 'https://oeee4-qaaaa-aaaak-qaaeq-cai.raw.ic0.app/?type=thumbnail&tokenid=enzsx-2akor-uwiaa-aaaaa-cuaab-eaqca-aadtb-a',
-        index: '7362',
-        nri: '39.5',
-      },
-      {
-        url: 'https://oeee4-qaaaa-aaaak-qaaeq-cai.raw.ic0.app/?type=thumbnail&tokenid=l225i-rakor-uwiaa-aaaaa-cuaab-eaqca-aaelt-a',
-        index: '8934',
-        nri: '39.3',
-      },
-    ],
-    floorPrice: 44.4,
-    totalPrice: 133.2,
-  },
-  {
-    name: 'OG MEDALS',
-    canisterId: 'rw623-hyaaa-aaaah-qctcq-cai',
-    icon: 'https://storageapi.fleek.co/fleek-team-bucket/logos/OG-medal-logo.png',
-    tokens: [
-      {
-        url: 'https://rw623-hyaaa-aaaah-qctcq-cai.raw.ic0.app/?type=thumbnail&tokenid=diwbj-yykor-uwiaa-aaaaa-b4auy-uaqca-aaacz-q',
-        index: '179',
-        nri: '13.1',
-      },
-    ],
-    floorPrice: 114,
-    totalPrice: 114,
-  },
-  {
-    name: 'Poked Bots',
-    canisterId: 'bzsui-sqaaa-aaaah-qce2a-cai',
-    icon: 'https://storageapi.fleek.co/fleek-team-bucket/logos/pokedbot.jpg',
-    tokens: [
-      {
-        url: 'https://bzsui-sqaaa-aaaah-qce2a-cai.raw.ic0.app/?type=thumbnail&tokenid=5xblk-wykor-uwiaa-aaaaa-b4arg-qaqca-aaaa6-a',
-        index: '60',
-        nri: '83.3',
-      },
-      {
-        url: 'https://bzsui-sqaaa-aaaah-qce2a-cai.raw.ic0.app/?type=thumbnail&tokenid=vzgoi-hakor-uwiaa-aaaaa-b4arg-qaqca-aabzj-q',
-        index: '3667',
-        nri: '20.5',
-      },
-      {
-        url: 'https://bzsui-sqaaa-aaaah-qce2a-cai.raw.ic0.app/?type=thumbnail&tokenid=6xyuy-3ikor-uwiaa-aaaaa-b4arg-qaqca-aacm2-q',
-        index: '4917',
-        nri: '0.7',
-      },
-    ],
-    floorPrice: 30,
-    totalPrice: 90,
   },
   {
     name: 'Dfinity Space Apes',
@@ -151,8 +87,23 @@ export const collections = [
         nri: '17.3',
       },
     ],
-    floorPrice: 6,
-    totalPrice: 72,
+  },
+  {
+    name: 'ICP Squad Accessories',
+    canisterId: 'po6n2-uiaaa-aaaaj-qaiua-cai',
+    icon: 'https://storageapi.fleek.co/fleek-team-bucket/logos/squad_log.jpeg',
+    tokens: [
+      {
+        url: 'https://po6n2-uiaaa-aaaaj-qaiua-cai.raw.ic0.app/?type=thumbnail&tokenid=kec4o-nykor-uwiaa-aaaaa-cmacf-aaqca-aaajt-a',
+        index: '614',
+        nri: '',
+      },
+      {
+        url: 'https://po6n2-uiaaa-aaaaj-qaiua-cai.raw.ic0.app/?type=thumbnail&tokenid=myqj4-pqkor-uwiaa-aaaaa-cmacf-aaqca-aadd3-q',
+        index: '6391',
+        nri: '',
+      },
+    ],
   },
   {
     name: 'Wrapped ICPunks',
@@ -165,41 +116,6 @@ export const collections = [
         nri: '76.2',
       },
     ],
-    floorPrice: 35.17,
-    totalPrice: 35.17,
-  },
-  {
-    name: 'ICPunks',
-    canisterId: 'bxdf4-baaaa-aaaah-qaruq-cai',
-    icon: 'https://qcg3w-tyaaa-aaaah-qakea-cai.raw.ic0.app/Token/1',
-    tokens: [
-      {
-        url: 'https://qcg3w-tyaaa-aaaah-qakea-cai.raw.ic0.app/Token/7465',
-        index: '7465',
-        nri: '27.1',
-      },
-    ],
-    floorPrice: 35.17,
-    totalPrice: 35.17,
-  },
-  {
-    name: 'The Moonwalkers',
-    canisterId: 'er7d4-6iaaa-aaaaj-qac2q-cai',
-    icon: 'https://storageapi.fleek.co/fleek-team-bucket/logos/3D_moonwalkers_icon__800x800_.png',
-    tokens: [
-      {
-        url: 'https://er7d4-6iaaa-aaaaj-qac2q-cai.raw.ic0.app/?type=thumbnail&tokenid=22swo-zakor-uwiaa-aaaaa-cmaaw-uaqca-aaaxq-a',
-        index: '1504',
-        nri: '',
-      },
-      {
-        url: 'https://er7d4-6iaaa-aaaaj-qac2q-cai.raw.ic0.app/?type=thumbnail&tokenid=d447r-7ykor-uwiaa-aaaaa-cmaaw-uaqca-aabib-a',
-        index: '2562',
-        nri: '',
-      },
-    ],
-    floorPrice: 17,
-    totalPrice: 34,
   },
   {
     name: 'Meme Cake',
@@ -217,8 +133,6 @@ export const collections = [
         nri: '66.0',
       },
     ],
-    floorPrice: 14.85,
-    totalPrice: 29.7,
   },
   {
     name: 'Cronic Critters',
@@ -231,8 +145,67 @@ export const collections = [
         nri: '60.4',
       },
     ],
-    floorPrice: 14.28,
-    totalPrice: 14.28,
+  },
+  {
+    name: 'The Moonwalkers',
+    canisterId: 'er7d4-6iaaa-aaaaj-qac2q-cai',
+    icon: 'https://storageapi.fleek.co/fleek-team-bucket/logos/3D_moonwalkers_icon__800x800_.png',
+    tokens: [
+      {
+        url: 'https://er7d4-6iaaa-aaaaj-qac2q-cai.raw.ic0.app/?type=thumbnail&tokenid=22swo-zakor-uwiaa-aaaaa-cmaaw-uaqca-aaaxq-a',
+        index: '1504',
+        nri: '',
+      },
+      {
+        url: 'https://er7d4-6iaaa-aaaaj-qac2q-cai.raw.ic0.app/?type=thumbnail&tokenid=d447r-7ykor-uwiaa-aaaaa-cmaaw-uaqca-aabib-a',
+        index: '2562',
+        nri: '',
+      },
+    ],
+  },
+  {
+    name: 'Motoko Day Drop',
+    canisterId: 'oeee4-qaaaa-aaaak-qaaeq-cai',
+    icon: 'https://oeee4-qaaaa-aaaak-qaaeq-cai.raw.ic0.app/?cc=0&type=thumbnail&tokenid=w5txv-gakor-uwiaa-aaaaa-cuaab-eaqca-aadhc-a',
+    tokens: [
+      {
+        url: 'https://oeee4-qaaaa-aaaak-qaaeq-cai.raw.ic0.app/?type=thumbnail&tokenid=5nfhi-cikor-uwiaa-aaaaa-cuaab-eaqca-aad3o-a',
+        index: '7900',
+        nri: '89.9',
+      },
+      {
+        url: 'https://oeee4-qaaaa-aaaak-qaaeq-cai.raw.ic0.app/?type=thumbnail&tokenid=enzsx-2akor-uwiaa-aaaaa-cuaab-eaqca-aadtb-a',
+        index: '7362',
+        nri: '39.5',
+      },
+      {
+        url: 'https://oeee4-qaaaa-aaaak-qaaeq-cai.raw.ic0.app/?type=thumbnail&tokenid=l225i-rakor-uwiaa-aaaaa-cuaab-eaqca-aaelt-a',
+        index: '8934',
+        nri: '39.3',
+      },
+    ],
+  },
+  {
+    name: 'Poked Bots',
+    canisterId: 'bzsui-sqaaa-aaaah-qce2a-cai',
+    icon: 'https://storageapi.fleek.co/fleek-team-bucket/logos/pokedbot.jpg',
+    tokens: [
+      {
+        url: 'https://bzsui-sqaaa-aaaah-qce2a-cai.raw.ic0.app/?type=thumbnail&tokenid=5xblk-wykor-uwiaa-aaaaa-b4arg-qaqca-aaaa6-a',
+        index: '60',
+        nri: '83.3',
+      },
+      {
+        url: 'https://bzsui-sqaaa-aaaah-qce2a-cai.raw.ic0.app/?type=thumbnail&tokenid=vzgoi-hakor-uwiaa-aaaaa-b4arg-qaqca-aabzj-q',
+        index: '3667',
+        nri: '20.5',
+      },
+      {
+        url: 'https://bzsui-sqaaa-aaaah-qce2a-cai.raw.ic0.app/?type=thumbnail&tokenid=6xyuy-3ikor-uwiaa-aaaaa-b4arg-qaqca-aacm2-q',
+        index: '4917',
+        nri: '0.7',
+      },
+    ],
   },
   {
     name: 'ICPuppies',
@@ -245,8 +218,30 @@ export const collections = [
         nri: '85.1',
       },
     ],
-    floorPrice: 8.98,
-    totalPrice: 8.98,
+  },
+  {
+    name: 'ICPunks',
+    canisterId: 'bxdf4-baaaa-aaaah-qaruq-cai',
+    icon: 'https://qcg3w-tyaaa-aaaah-qakea-cai.raw.ic0.app/Token/1',
+    tokens: [
+      {
+        url: 'https://qcg3w-tyaaa-aaaah-qakea-cai.raw.ic0.app/Token/7465',
+        index: '7465',
+        nri: '27.1',
+      },
+    ],
+  },
+  {
+    name: 'ICP Squad',
+    canisterId: 'jmuqr-yqaaa-aaaaj-qaicq-cai',
+    icon: 'https://storageapi.fleek.co/fleek-team-bucket/logos/Arun.jpeg',
+    tokens: [
+      {
+        url: 'https://jmuqr-yqaaa-aaaaj-qaicq-cai.raw.ic0.app/?type=thumbnail&tokenid=o77mz-xakor-uwiaa-aaaaa-cmaca-uaqca-aaaec-a',
+        index: '260',
+        nri: '',
+      },
+    ],
   },
   {
     name: 'Internet Astronauts',
@@ -264,21 +259,17 @@ export const collections = [
         nri: '0.5',
       },
     ],
-    floorPrice: 3.29,
-    totalPrice: 6.58,
   },
   {
-    name: 'ICP Squad',
-    canisterId: 'jmuqr-yqaaa-aaaaj-qaicq-cai',
-    icon: 'https://storageapi.fleek.co/fleek-team-bucket/logos/Arun.jpeg',
+    name: 'OG MEDALS',
+    canisterId: 'rw623-hyaaa-aaaah-qctcq-cai',
+    icon: 'https://storageapi.fleek.co/fleek-team-bucket/logos/OG-medal-logo.png',
     tokens: [
       {
-        url: 'https://jmuqr-yqaaa-aaaaj-qaicq-cai.raw.ic0.app/?type=thumbnail&tokenid=o77mz-xakor-uwiaa-aaaaa-cmaca-uaqca-aaaec-a',
-        index: '260',
-        nri: '',
+        url: 'https://rw623-hyaaa-aaaah-qctcq-cai.raw.ic0.app/?type=thumbnail&tokenid=diwbj-yykor-uwiaa-aaaaa-b4auy-uaqca-aaacz-q',
+        index: '179',
+        nri: '13.1',
       },
     ],
-    floorPrice: 2,
-    totalPrice: 2,
   },
 ];
