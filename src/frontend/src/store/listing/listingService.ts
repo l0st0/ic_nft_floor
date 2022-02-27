@@ -33,11 +33,15 @@ const getListingData = async () => {
     const newDate = new Date();
     const hour = newDate.getHours();
     const date = newDate.setHours(hour, 0, 0, 0).toString();
+    const ofset = new Date().getTimezoneOffset();
+    const allowOffset = ofset % 60 === 0;
 
-    const getStat = await backend.getLastStat();
+    if (allowOffset) {
+      const getStat = await backend.getStat(date);
 
-    if (!getStat.length || getStat[0]?.time !== date) {
-      await backend.addStats({ data: results, time: date });
+      if (!getStat.length) {
+        await backend.addStats({ data: results, time: date });
+      }
     }
   } catch (error) {
     console.log(error);

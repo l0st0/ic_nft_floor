@@ -15,8 +15,8 @@ type CanisterData =
  };
 service : {
   addStats: (Stats) -> ();
-  getLastStat: () -> (opt Stats) query;
   getPrice: () -> (PriceData) query;
+  getStat: (text) -> (opt Stats) query;
   getStats: () -> (vec Stats) query;
   updatePrice: (PriceData) -> (PriceData);
 }

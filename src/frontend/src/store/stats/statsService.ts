@@ -1,10 +1,10 @@
 import { backend } from '../../../../declarations/backend';
-// import { stats } from '../../data/dummy';
+// import { dummyStats as stats } from '../../data/stats';
 
 const getStats = async () => {
   const stats = await backend.getStats();
 
-  const modified = stats.sort((a, b) => new Date(b.time).getTime() - new Date(a.time).getTime());
+  const modified = stats.sort((a, b) => parseInt(b.time) - parseInt(a.time));
 
   return modified;
 };

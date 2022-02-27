@@ -25,16 +25,12 @@ actor {
     stable var entriesStats : [(Text, Types.Stats)] = [];
     let mapStats = Map.fromIter<Text,Types.Stats>(entriesStats.vals(), 10, Text.equal, Text.hash);
 
-    var id = Nat.toText(mapStats.size());
-
     public func addStats(data: Types.Stats): async () {
-        var id = Nat.toText(mapStats.size() + 1);
-        mapStats.put(id, data);
+        mapStats.put(data.time, data);
     };
 
-    public query func getLastStat() : async ?Types.Stats {
-        var id = Nat.toText(mapStats.size());
-        return mapStats.get(id);
+    public query func getStat(key: Text) : async ?Types.Stats {
+        return mapStats.get(key);
     };
 
     public query func getStats() : async [Types.Stats] {
