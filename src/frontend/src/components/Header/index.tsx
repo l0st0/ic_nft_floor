@@ -9,7 +9,9 @@ import { StyledMainHeading } from './styles';
 import { SocialButton } from '../SocialButton';
 import { getCollections } from '../../store/collection/collectionSlice';
 import { Refresh, Send } from '@mui/icons-material';
-import { signHeaderWidth } from '../../store/common/commonSlice';
+import { getStats } from '../../store/stats/statsSlice';
+import { getPrice } from '../../store/price/priceSlice';
+import { getListings } from '../../store/listing/listingSlice';
 
 interface Form {
   principal: string;
@@ -24,12 +26,6 @@ export const Header = () => {
   const headingRef = React.useRef(null);
   const { width } = useComponentSize(headingRef);
 
-  React.useEffect(() => {
-    if (width) {
-      dispatch(signHeaderWidth(width));
-    }
-  }, [width]);
-
   const {
     control,
     handleSubmit,
@@ -37,11 +33,20 @@ export const Header = () => {
     formState: { errors },
   } = useForm<Form>();
 
-  const onSubmit = async ({ principal }: Form) => {
-    await dispatch(getCollections({ principal }));
-  };
-
   const { principal } = watch();
+
+  const refresh = principal === principalID && principal.length;
+
+  const onSubmit = async ({ principal }: Form) => {
+    if (refresh) {
+      dispatch(getPrice());
+      await dispatch(getListings());
+      await dispatch(getStats());
+      await dispatch(getCollections({ principal }));
+    } else {
+      await dispatch(getCollections({ principal }));
+    }
+  };
 
   return (
     <>
@@ -110,7 +115,7 @@ export const Header = () => {
               variant='contained'
               sx={{ m: '0 !important', maxHeight: 40, minWidth: 0 }}
             >
-              {principal === principalID && principal.length ? <Refresh /> : <Send />}
+              {refresh ? <Refresh /> : <Send />}
             </Button>
           </Stack>
         </Stack>

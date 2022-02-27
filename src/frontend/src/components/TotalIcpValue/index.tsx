@@ -48,7 +48,7 @@ export const TotalIcpValue = () => {
         </Typography>
 
         <Button onClick={toggleCurrency} variant='outlined' size='small' sx={{ fontSize: '12px', minWidth: '50px' }}>
-          {showIcp ? 'ICP' : 'USD'}
+          Switch to {!showIcp ? 'ICP' : 'USD'}
         </Button>
       </Stack>
 

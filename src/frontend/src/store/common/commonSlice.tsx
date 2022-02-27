@@ -7,7 +7,6 @@ interface CommonState {
   theme: ModeType;
   mode: PaletteMode;
   showIcp: boolean;
-  headerWidth: number;
 }
 
 const prefersDarkMode = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
@@ -26,7 +25,6 @@ const initialState: CommonState = {
   theme: (localStorage.getItem('mode') as ModeType) || 'system',
   mode: getMode(),
   showIcp: true,
-  headerWidth: 0,
 };
 
 export const commonSlice = createSlice({
@@ -46,13 +44,10 @@ export const commonSlice = createSlice({
     toggleShowIcp: (state, action: PayloadAction<boolean>) => {
       state.showIcp = action.payload;
     },
-    signHeaderWidth: (state, action: PayloadAction<number>) => {
-      state.headerWidth = action.payload;
-    },
   },
 });
 
-export const { changeTheme, signHeaderWidth, toggleShowIcp } = commonSlice.actions;
+export const { changeTheme, toggleShowIcp } = commonSlice.actions;
 export const darkModeState = (state: RootState) => state.common;
 
 export default commonSlice.reducer;

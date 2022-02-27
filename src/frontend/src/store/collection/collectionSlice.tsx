@@ -2,6 +2,7 @@ import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit';
 import type { RootState } from '..';
 import { ModNFTCollectionType } from '../../types';
 import { getListings } from '../listing/listingSlice';
+import { getStats } from '../stats/statsSlice';
 import collectionService from './collectionService';
 // import { collections } from '../../data/dummy';
 
@@ -20,15 +21,12 @@ interface CollectionState {
   error?: string;
 }
 
+const totalCollectionsPrice = { actual: 0, oneHour: 0, day: 0, week: 0 };
+
 const initialState: CollectionState = {
   collections: [],
   numberOfTokens: 0,
-  totalCollectionsPrice: {
-    actual: 0,
-    oneHour: 0,
-    day: 0,
-    week: 0,
-  },
+  totalCollectionsPrice: totalCollectionsPrice,
   principal: '',
   loading: false,
   checking: false,
@@ -44,15 +42,19 @@ export const getCollections = createAsyncThunk<
   }
 >('collection/getCollections', async ({ principal }, { dispatch, rejectWithValue, getState }) => {
   try {
-    const collections = await collectionService.getCollections({ principal });
-    if (!collections.length) return rejectWithValue('No collections found for this principal.');
-
     let { listings } = getState().listing;
-    const { stats } = getState().stats;
+    let { stats } = getState().stats;
 
     if (!listings.length) {
       listings = await dispatch(getListings()).unwrap();
     }
+
+    if (!stats.length) {
+      stats = await dispatch(getStats()).unwrap();
+    }
+
+    const collections = await collectionService.getCollections({ principal });
+    if (!collections.length) return rejectWithValue('No collections found for this principal.');
 
     const data = collections
       .map((item) => {
@@ -102,6 +104,7 @@ export const collectionSlice = createSlice({
         state.error = undefined;
         state.collections = cols;
         state.principal = action.payload.principal;
+        state.numberOfTokens = cols.reduce((a, b) => a + b.tokens.length, 0);
 
         state.totalCollectionsPrice = {
           actual: cols.reduce((a, b) => a + b.totalPrice, 0),
@@ -109,13 +112,14 @@ export const collectionSlice = createSlice({
           day: cols.reduce((a, b) => a + b.stats[24]?.price || 0, 0),
           week: cols.reduce((a, b) => a + b.stats[168]?.price || 0, 0),
         };
-        state.numberOfTokens = cols.reduce((a, b) => a + b.tokens.length, 0);
       })
       .addCase(getCollections.rejected, (state, action) => {
         state.loading = false;
         state.collections = [];
         state.error = action.payload;
         state.numberOfTokens = 0;
+        state.principal = '';
+        state.totalCollectionsPrice = totalCollectionsPrice;
       });
   },
 });

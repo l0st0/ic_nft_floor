@@ -31,7 +31,10 @@ function App() {
     get();
   }, []);
 
-  console.log('stats', stats);
+  console.log(
+    'stats',
+    stats.map((item) => ({ ...item, time: new Date(parseInt(item.time)) }))
+  );
 
   const muiTheme = React.useMemo(() => {
     return createTheme(getDesignTokens(mode));

@@ -69,3 +69,8 @@ export interface Stats {
   data: StatsData[];
   time: string;
 }
+
+export interface Canister {
+  name: string;
+  canister: string;
+}

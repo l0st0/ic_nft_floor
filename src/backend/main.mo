@@ -11,11 +11,23 @@ actor {
         date = "";
     };
 
+    stable var canisters: [Types.Canisters] = [];
+
+    public query func getCanisters() : async [Types.Canisters] {
+        return canisters;
+    };
+
+    public func updateCanisters(data: [Types.Canisters]) : async [Types.Canisters] {
+        canisters := data;
+
+        return data;
+    };
+
     public query func getPrice() : async Types.PriceData {
         return priceData;
     };
 
-    public func updatePrice(data: Types.PriceData) : async  Types.PriceData {
+    public func updatePrice(data: Types.PriceData) : async Types.PriceData {
         priceData := data;
 
         return data;

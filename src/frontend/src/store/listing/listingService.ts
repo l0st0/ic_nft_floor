@@ -6,26 +6,27 @@ import { backend } from '../../../../declarations/backend';
 //@ts-ignore
 import { idlFactory } from '../../dids/ape.did';
 import axios from 'axios';
+import { Canister } from '../../types';
+
+const _isCanister = (c: string) => {
+  return c.length == 27 && c.split('-').length == 5;
+};
 
 const getListingData = async () => {
-  const _isCanister = (c: string) => {
-    return c.length == 27 && c.split('-').length == 5;
-  };
-
-  let collections = [];
+  let canisters: Canister[] = [];
 
   try {
-    const { data }: { data: { id: string; name: string }[] } = await axios.get(
-      'https://us-central1-entrepot-api.cloudfunctions.net/api/collections'
-    );
-
-    collections = data.map((a) => ({ name: a.name, canister: a.id })).filter((a) => _isCanister(a.canister));
+    canisters = await backend.getCanisters();
   } catch (error) {
-    throw error;
+    try {
+      canisters = await updateCanisters();
+    } catch (error) {
+      throw error;
+    }
   }
 
   const { results, errors } = await PromisePool.withConcurrency(35)
-    .for(collections)
+    .for(canisters)
     .process(async (can, index, pool) => {
       const actor = getActor(idlFactory, can.canister);
       const response = await callCanister(actor, 'stats');
@@ -67,6 +68,20 @@ const getListingData = async () => {
   return results;
 };
 
-const listingService = { getListingData };
+const updateCanisters = async () => {
+  const { data }: { data: { id: string; name: string }[] } = await axios.get(
+    'https://us-central1-entrepot-api.cloudfunctions.net/api/collections'
+  );
+
+  const modCanister = data.map((a) => ({ name: a.name, canister: a.id })).filter((a) => _isCanister(a.canister));
+
+  if (modCanister.length) {
+    await backend.updateCanisters(modCanister);
+  }
+
+  return modCanister;
+};
+
+const listingService = { getListingData, updateCanisters };
 
 export default listingService;
