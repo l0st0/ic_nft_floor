@@ -27,31 +27,15 @@ export const callCanister = async (actor: ActorSubclass<any>, method: string, ac
   }
 };
 
-export const to32bits = (num: number) => {
-  const b = new ArrayBuffer(4);
-  new DataView(b).setUint32(0, num);
-  return Array.from(new Uint8Array(b));
-};
+export const transformListingResponse = (response: any, canisterId: string): Listing => {
+  let price = 0;
 
-export const tokenIdentifier = (principal: string, index: number) => {
-  const padding = Buffer.from('\x0Atid');
-  const array = new Uint8Array([...padding, ...Principal.fromText(principal).toUint8Array(), ...to32bits(index)]);
-  return Principal.fromUint8Array(array).toText();
-};
-
-export const getOffsetIndex = (index: number, canisterId: string) => {
-  if (canisterId !== 'jeghr-iaaaa-aaaah-qco7q-cai') {
-    return index + 1;
+  if (response[3]) {
+    price = Number((Number(response[3]) / 100000000).toFixed(2));
   }
 
-  return index;
-};
-
-export const transformListingResponse = (response: any, canisterId: string): Listing[] => {
-  return response.map((record: any) => {
-    return {
-      canisterId,
-      price: Number(record[1].price) / 100000000,
-    };
-  });
+  return {
+    canisterId,
+    price,
+  };
 };

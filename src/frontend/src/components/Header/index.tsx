@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Stack, TextField } from '@mui/material';
+import { Stack, TextField } from '@mui/material';
 import useComponentSize from '@rehooks/component-size';
 import { ThemeButton } from '../ThemeButton';
 import { useAppDispatch, useAppSelector } from '../../hooks';
@@ -7,11 +7,10 @@ import { Controller, useForm } from 'react-hook-form';
 import { DfinityBadge } from '../DfinityBadge';
 import { StyledMainHeading } from './styles';
 import { SocialButton } from '../SocialButton';
-import { getCollections } from '../../store/collection/collectionSlice';
-import { Refresh, Send } from '@mui/icons-material';
-import { getStats } from '../../store/stats/statsSlice';
-import { getPrice } from '../../store/price/priceSlice';
-import { getListings } from '../../store/listing/listingSlice';
+import { getCollections, revalidateCollections } from '../../store/collection/collectionSlice';
+import { Send } from '@mui/icons-material';
+import { LoadingButton } from '@mui/lab';
+import { ResetButtons } from '../ResetButtons';
 
 interface Form {
   principal: string;
@@ -19,9 +18,8 @@ interface Form {
 
 export const Header = () => {
   const dispatch = useAppDispatch();
-  const { loading, principal: principalID } = useAppSelector((state) => state.collection);
-  const { loading: listingLoading } = useAppSelector((state) => state.listing);
-  const { loading: priceLoading } = useAppSelector((state) => state.price);
+  const { loading, collections } = useAppSelector((state) => state.collection);
+  const { fetchingError } = useAppSelector((state) => state.common);
 
   const headingRef = React.useRef(null);
   const { width } = useComponentSize(headingRef);
@@ -29,23 +27,12 @@ export const Header = () => {
   const {
     control,
     handleSubmit,
-    watch,
     formState: { errors },
   } = useForm<Form>();
 
-  const { principal } = watch();
-
-  const refresh = principal === principalID && principal.length;
-
   const onSubmit = async ({ principal }: Form) => {
-    if (refresh) {
-      dispatch(getPrice());
-      await dispatch(getListings());
-      await dispatch(getStats());
-      await dispatch(getCollections({ principal }));
-    } else {
-      await dispatch(getCollections({ principal }));
-    }
+    await dispatch(getCollections({ principal }));
+    // await dispatch(revalidateCollections({ principal }));
   };
 
   return (
@@ -92,7 +79,7 @@ export const Header = () => {
                 <TextField
                   autoFocus
                   fullWidth
-                  disabled={loading || listingLoading || priceLoading}
+                  disabled={loading || fetchingError}
                   id='principalInput'
                   placeholder='Enter your principal'
                   variant='outlined'
@@ -109,16 +96,23 @@ export const Header = () => {
               )}
             />
 
-            <Button
-              disabled={loading || listingLoading || priceLoading}
+            <LoadingButton
+              loading={loading}
+              disabled={loading || fetchingError}
               type='submit'
               variant='contained'
               sx={{ m: '0 !important', maxHeight: 40, minWidth: 0 }}
             >
-              {refresh ? <Refresh /> : <Send />}
-            </Button>
+              <Send />
+            </LoadingButton>
           </Stack>
         </Stack>
+
+        {collections.length ? (
+          <Stack width={width} mt={1} flexDirection='row' flexWrap='wrap'>
+            <ResetButtons />
+          </Stack>
+        ) : null}
       </Stack>
     </>
   );

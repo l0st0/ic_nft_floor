@@ -19,22 +19,15 @@ function App() {
 
   React.useEffect(() => {
     const get = async () => {
-      try {
-        dispatch(getPrice());
-        await dispatch(getListings());
-        await dispatch(getStats());
-      } catch (error) {
-        console.log('error', error);
-      }
+      dispatch(getPrice());
+      dispatch(getListings());
+      dispatch(getStats());
     };
 
     get();
   }, []);
 
-  console.log(
-    'stats',
-    stats.map((item) => ({ ...item, time: new Date(parseInt(item.time)) }))
-  );
+  console.log('stats', stats);
 
   const muiTheme = React.useMemo(() => {
     return createTheme(getDesignTokens(mode));

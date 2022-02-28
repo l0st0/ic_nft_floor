@@ -1,37 +1,47 @@
 import { NFTCollection } from '@psychedelic/dab-js';
-import collections from '../data/nri.json';
-import { NriData, GetNriInterface, ModNFTCollectionType } from '../types';
+import { ModifyCollectionsInterface, ModNFTCollectionType } from '../types';
 
-const nriData: NriData = collections;
+const removeFromCanisterList = ['vlhm2-4iaaa-aaaam-qaatq-cai', 'lhq4n-3yaaa-aaaai-qaniq-cai'];
 
-export const getNri = ({ canister, index }: GetNriInterface) => {
-  if (typeof nriData[canister] !== 'undefined') {
-    const value = nriData[canister][index];
-    return String((value * 100).toFixed(1));
-  }
+export const transformCollectionResponse = (collections: NFTCollection[]): NFTCollection[] =>
+  collections
+    .map((item) => {
+      let canisterId = item.canisterId;
 
-  return '';
-};
+      // Punks
+      if (canisterId === 'qcg3w-tyaaa-aaaah-qakea-cai') {
+        canisterId = 'bxdf4-baaaa-aaaah-qaruq-cai';
+      }
 
-export const modifyCollection = (collections: NFTCollection[]) =>
-  collections.map(({ name, canisterId, icon, tokens }) => {
-    return {
-      name,
-      canisterId,
-      icon: String(icon) || '',
-      tokens: tokens.map((data) => {
-        const index = data?.index?.toString() || '';
-        let url = data.url;
-        let nri = getNri({ canister: canisterId, index: parseInt(index) });
+      // Turtle
+      if (canisterId === 'fl5nr-xiaaa-aaaai-qbjmq-cai') {
+        canisterId = 'jeghr-iaaaa-aaaah-qco7q-cai';
+      }
 
-        if (canisterId === 'pk6rk-6aaaa-aaaae-qaazq-cai') {
-          url = data.url.replace('pk6rk-6aaaa-aaaae-qaazq-cai', '7budn-wqaaa-aaaah-qcsba-cai');
-        }
+      // Drip
+      if (canisterId === 'd3ttm-qaaaa-aaaai-qam4a-cai') {
+        canisterId = '3db6u-aiaaa-aaaah-qbjbq-cai';
+      }
 
-        return { url, index, nri };
-      }),
-    };
-  });
+      // Cats
+      if (canisterId === '4nvhy-3qaaa-aaaah-qcnoq-cai') {
+        canisterId = 'y3b7h-siaaa-aaaah-qcnwa-cai';
+      }
+
+      // Bunny
+      if (canisterId === 'xkbqi-2qaaa-aaaah-qbpqq-cai') {
+        canisterId = 'q6hjz-kyaaa-aaaah-qcama-cai';
+      }
+
+      return { ...item, canisterId };
+    })
+    .filter((item) => {
+      const findSame = removeFromCanisterList.some((can) => can === item.canisterId);
+
+      if (findSame) return false;
+
+      return true;
+    });
 
 export const sortByObjectKey = (unordered: {}) => {
   return Object.keys(unordered)
@@ -65,4 +75,39 @@ export const formatPrice = (price: number, digits = 0, currency = false) => {
   }
 
   return price.toLocaleString('en-US', { ...options, maximumFractionDigits: digits });
+};
+
+export const modifyCollections = ({ collections, listings, stats }: ModifyCollectionsInterface) => {
+  const data = collections
+    .map((item) => {
+      const listingData = listings.find((data) => data.canisterId === item.canisterId);
+
+      const statData = stats.map((stat) => {
+        const filterData = stat.data.filter(({ canisterId }) => canisterId === item.canisterId);
+
+        const price = filterData[0]?.price || 0;
+
+        return { time: stat.time, price: price * item.tokens.length };
+      });
+
+      let floorPrice = 0;
+      let totalPrice = 0;
+
+      if (listingData) {
+        floorPrice = listingData.price;
+        totalPrice = listingData.price * item.tokens.length;
+      }
+
+      return { ...item, floorPrice, totalPrice, stats: statData };
+    })
+    .sort((a, b) => b.totalPrice - a.totalPrice);
+
+  const totalCollectionsPrice = {
+    actual: data.reduce((a, b) => a + b.totalPrice, 0),
+    oneHour: data.reduce((a, b) => a + b.stats[1]?.price || 0, 0),
+    day: data.reduce((a, b) => a + b.stats[24]?.price || 0, 0),
+    week: data.reduce((a, b) => a + b.stats[168]?.price || 0, 0),
+  };
+
+  return { data, totalCollectionsPrice };
 };

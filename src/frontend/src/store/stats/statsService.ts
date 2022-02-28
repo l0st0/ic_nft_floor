@@ -1,12 +1,14 @@
+import axios from 'axios';
 import { backend } from '../../../../declarations/backend';
+import { Stats } from '../../types';
 // import { dummyStats as stats } from '../../data/stats';
 
 const getStats = async () => {
-  const stats = await backend.getStats();
+  const { data } = await axios.get('https://www.todayweb.net/api/nftfloor/stats');
 
-  const modified = stats.sort((a, b) => parseInt(b.time) - parseInt(a.time));
+  const stats: Stats[] = data.data;
 
-  return modified;
+  return stats;
 };
 
 const listingService = { getStats };

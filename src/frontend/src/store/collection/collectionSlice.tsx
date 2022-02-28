@@ -1,89 +1,57 @@
-import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit';
+import { NFTCollection } from '@psychedelic/dab-js';
+import { createSlice, PayloadAction, createAsyncThunk, Dispatch } from '@reduxjs/toolkit';
 import type { RootState } from '..';
 import { ModNFTCollectionType } from '../../types';
-import { getListings } from '../listing/listingSlice';
-import { getStats } from '../stats/statsSlice';
 import collectionService from './collectionService';
 // import { collections } from '../../data/dummy';
 
 interface CollectionState {
-  collections: ModNFTCollectionType[];
+  collections: NFTCollection[];
   numberOfTokens: number;
-  totalCollectionsPrice: {
-    actual: number;
-    oneHour: number;
-    day: number;
-    week: number;
-  };
-  principal: string;
+  principalID: string;
   loading: boolean;
-  checking: boolean;
+  validating: boolean;
   error?: string;
 }
-
-const totalCollectionsPrice = { actual: 0, oneHour: 0, day: 0, week: 0 };
 
 const initialState: CollectionState = {
   collections: [],
   numberOfTokens: 0,
-  totalCollectionsPrice: totalCollectionsPrice,
-  principal: '',
+  principalID: '',
   loading: false,
-  checking: false,
+  validating: false,
   error: undefined,
 };
 
 export const getCollections = createAsyncThunk<
-  { data: ModNFTCollectionType[]; principal: string },
+  { collections: NFTCollection[]; principal: string },
   { principal: string },
   {
     rejectValue: string;
-    state: RootState;
   }
->('collection/getCollections', async ({ principal }, { dispatch, rejectWithValue, getState }) => {
+>('collection/getCollections', async ({ principal }, { rejectWithValue }) => {
   try {
-    let { listings } = getState().listing;
-    let { stats } = getState().stats;
-
-    if (!listings.length) {
-      listings = await dispatch(getListings()).unwrap();
-    }
-
-    if (!stats.length) {
-      stats = await dispatch(getStats()).unwrap();
-    }
-
     const collections = await collectionService.getCollections({ principal });
     if (!collections.length) return rejectWithValue('No collections found for this principal.');
-
-    const data = collections
-      .map((item) => {
-        const listingData = listings.find((data) => data.canisterId === item.canisterId);
-
-        const statData = stats.map((stat) => {
-          const filterData = stat.data.filter(({ canisterId }) => canisterId === item.canisterId);
-
-          const price = filterData[0]?.price || 0;
-
-          return { time: stat.time, price: price * item.tokens.length };
-        });
-
-        let floorPrice = 0;
-        let totalPrice = 0;
-
-        if (listingData) {
-          floorPrice = listingData.price;
-          totalPrice = listingData.price * item.tokens.length;
-        }
-
-        return { ...item, floorPrice, totalPrice, stats: statData };
-      })
-      .sort((a, b) => b.totalPrice - a.totalPrice);
-
-    return { data, principal };
+    return { collections, principal };
   } catch (err) {
-    const message = 'There was an error while getting collections.';
-    return rejectWithValue(message);
+    return rejectWithValue('There was an error while getting collections.');
+  }
+});
+
+export const revalidateCollections = createAsyncThunk<
+  NFTCollection[],
+  { principal: string },
+  {
+    rejectValue: string;
+  }
+>('collection/revalidateCollections', async ({ principal }, { rejectWithValue }) => {
+  try {
+    const collections = await collectionService.revalidateCollections({ principal });
+    if (!collections.length) return rejectWithValue('No collections found for this principal.');
+    return collections;
+  } catch (err) {
+    return rejectWithValue('There was an error while getting collections.');
   }
 });
 
@@ -98,28 +66,38 @@ export const collectionSlice = createSlice({
         state.error = undefined;
       })
       .addCase(getCollections.fulfilled, (state, action) => {
-        const cols = action.payload.data;
+        const cols = action.payload.collections;
 
         state.loading = false;
         state.error = undefined;
         state.collections = cols;
-        state.principal = action.payload.principal;
+        state.principalID = action.payload.principal;
         state.numberOfTokens = cols.reduce((a, b) => a + b.tokens.length, 0);
-
-        state.totalCollectionsPrice = {
-          actual: cols.reduce((a, b) => a + b.totalPrice, 0),
-          oneHour: cols.reduce((a, b) => a + b.stats[1]?.price || 0, 0),
-          day: cols.reduce((a, b) => a + b.stats[24]?.price || 0, 0),
-          week: cols.reduce((a, b) => a + b.stats[168]?.price || 0, 0),
-        };
       })
       .addCase(getCollections.rejected, (state, action) => {
         state.loading = false;
         state.collections = [];
         state.error = action.payload;
         state.numberOfTokens = 0;
-        state.principal = '';
-        state.totalCollectionsPrice = totalCollectionsPrice;
+        state.principalID = '';
+      })
+      .addCase(revalidateCollections.pending, (state) => {
+        state.validating = true;
+        state.error = undefined;
+      })
+      .addCase(revalidateCollections.fulfilled, (state, action) => {
+        const cols = action.payload;
+
+        state.validating = false;
+        state.error = undefined;
+        state.collections = cols;
+        state.numberOfTokens = cols.reduce((a, b) => a + b.tokens.length, 0);
+      })
+      .addCase(revalidateCollections.rejected, (state, action) => {
+        state.validating = false;
+        state.collections = [];
+        state.error = action.payload;
+        state.numberOfTokens = 0;
       });
   },
 });

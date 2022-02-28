@@ -1,16 +1,11 @@
-import { callCanister, getActor } from '../../utils/boundary';
-// import { canisters } from '../../data/canisters';
+import { callCanister, getActor, transformListingResponse } from '../../utils/boundary';
 import { PromisePool } from '@supercharge/promise-pool';
 import { backend } from '../../../../declarations/backend';
-
-//@ts-ignore
-import { idlFactory } from '../../dids/ape.did';
 import axios from 'axios';
 import { Canister } from '../../types';
 
-const _isCanister = (c: string) => {
-  return c.length == 27 && c.split('-').length == 5;
-};
+//@ts-ignore
+import { idlFactory } from '../../dids/ape.did';
 
 const getListingData = async () => {
   let canisters: Canister[] = [];
@@ -31,55 +26,26 @@ const getListingData = async () => {
       const actor = getActor(idlFactory, can.canister);
       const response = await callCanister(actor, 'stats');
 
-      let price = 0;
-
-      if (response[3]) {
-        price = Number((Number(response[3]) / 100000000).toFixed(2));
-      }
-
-      return {
-        canisterId: can.canister,
-        price: price /* + Math.floor(Math.random() * (10 - -10 + 1)) + -10 */,
-      };
+      return transformListingResponse(response, can.canister);
     });
 
   if (errors.length) {
     console.log('errors', errors);
   }
 
-  try {
-    const newDate = new Date();
-    const hour = newDate.getHours();
-    const date = newDate.setHours(hour, 0, 0, 0).toString();
-    const offset = new Date().getTimezoneOffset();
-    const allowOffset = offset % 60 === 0;
-
-    if (allowOffset) {
-      const getStat = await backend.getStat(date);
-
-      if (!getStat.length) {
-        await backend.addStats({ data: results, time: date });
-      }
-    }
-  } catch (error) {
-    console.log(error);
-  }
-
   return results;
 };
 
 const updateCanisters = async () => {
-  const { data }: { data: { id: string; name: string }[] } = await axios.get(
-    'https://us-central1-entrepot-api.cloudfunctions.net/api/collections'
-  );
+  const { data } = await axios.get('https://www.todayweb.net/api/nftfloor/updateCanisters');
 
-  const modCanister = data.map((a) => ({ name: a.name, canister: a.id })).filter((a) => _isCanister(a.canister));
+  const cans: { canister: string; name: string }[] = data.data;
 
-  if (modCanister.length) {
-    await backend.updateCanisters(modCanister);
+  if (cans.length) {
+    await backend.updateCanisters(cans);
   }
 
-  return modCanister;
+  return cans;
 };
 
 const listingService = { getListingData, updateCanisters };

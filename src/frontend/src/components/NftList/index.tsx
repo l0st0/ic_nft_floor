@@ -2,12 +2,16 @@ import { TrendingDown, TrendingUp } from '@mui/icons-material';
 import { Avatar, Grid, List, ListItem, ListItemAvatar, ListItemText, Stack, Typography } from '@mui/material';
 import { Box } from '@mui/system';
 import { useAppSelector } from '../../hooks';
-import { formatPrice } from '../../utils';
+import { formatPrice, modifyCollections } from '../../utils';
 
 export const NftList = () => {
   const { collections, numberOfTokens } = useAppSelector((state) => state.collection);
+  const { listings } = useAppSelector((state) => state.listing);
+  const { stats } = useAppSelector((state) => state.stats);
   const { price } = useAppSelector((state) => state.price);
   const { mode, showIcp } = useAppSelector((state) => state.common);
+
+  const { data } = modifyCollections({ collections, listings, stats });
 
   return (
     <Stack mt={5}>
@@ -16,12 +20,14 @@ export const NftList = () => {
       </Typography>
 
       <Grid container spacing={2} rowSpacing={-1}>
-        {collections.map((item, index) => {
-          const oldPrice = item.stats[24]?.price || 0;
+        {data.map((item, index) => {
+          const hourOldPrice = item.stats[1]?.price || 0;
+          const dayOldPrice = item.stats[24]?.price || 0;
 
-          const percent = oldPrice ? (1 - item.totalPrice / oldPrice) * 100 : 0;
+          const hourPercent = hourOldPrice ? (1 - item.totalPrice / hourOldPrice) * 100 : 0;
+          const dayPercent = dayOldPrice ? (1 - item.totalPrice / dayOldPrice) * 100 : 0;
 
-          const renderPercent = (
+          const renderPercent = (percent: number) => (
             <>
               <Box
                 component={percent < 0 ? TrendingUp : TrendingDown}
@@ -92,7 +98,20 @@ export const NftList = () => {
                                 ? ` — ${formatPrice(item.totalPrice, 2)} ICP`
                                 : ` — ${formatPrice(item?.totalPrice * price, 0, true)}`}
                             </span>
-                            {oldPrice ? (
+                            {hourOldPrice ? (
+                              <span>
+                                <Typography
+                                  sx={{ display: 'inline' }}
+                                  component='span'
+                                  variant='body2'
+                                  color='text.primary'
+                                >
+                                  1h
+                                </Typography>
+                                {` — `} {renderPercent(hourPercent)}
+                              </span>
+                            ) : null}
+                            {dayOldPrice ? (
                               <span>
                                 <Typography
                                   sx={{ display: 'inline' }}
@@ -102,7 +121,7 @@ export const NftList = () => {
                                 >
                                   24h
                                 </Typography>
-                                {` — `} {renderPercent}
+                                {` — `} {renderPercent(dayPercent)}
                               </span>
                             ) : null}
                           </>
