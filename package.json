@@ -47,7 +47,7 @@
     "@mui/icons-material": "^5.4.1",
     "@mui/lab": "^5.0.0-alpha.68",
     "@mui/material": "^5.4.1",
-    "@psychedelic/dab-js": "^0.5.4",
+    "@psychedelic/dab-js": "^1.0.2",
     "@reduxjs/toolkit": "^1.7.2",
     "@rehooks/component-size": "^1.0.3",
     "@supercharge/promise-pool": "^2.1.0",

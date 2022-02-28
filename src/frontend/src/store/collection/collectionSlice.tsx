@@ -27,31 +27,31 @@ export const getCollections = createAsyncThunk<
   { collections: NFTCollection[]; principal: string },
   { principal: string },
   {
-    rejectValue: string;
+    rejectValue: { msg: string; principal: string };
   }
 >('collection/getCollections', async ({ principal }, { rejectWithValue }) => {
   try {
     const collections = await collectionService.getCollections({ principal });
-    if (!collections.length) return rejectWithValue('No collections found for this principal.');
+    if (!collections.length) return rejectWithValue({ msg: 'No collections found for this principal.', principal });
     return { collections, principal };
   } catch (err) {
-    return rejectWithValue('There was an error while getting collections.');
+    return rejectWithValue({ msg: 'There was an error while getting collections.', principal });
   }
 });
 
 export const revalidateCollections = createAsyncThunk<
-  NFTCollection[],
+  { collections: NFTCollection[]; principal: string },
   { principal: string },
   {
-    rejectValue: string;
+    rejectValue: { msg: string; principal: string };
   }
 >('collection/revalidateCollections', async ({ principal }, { rejectWithValue }) => {
   try {
     const collections = await collectionService.revalidateCollections({ principal });
-    if (!collections.length) return rejectWithValue('No collections found for this principal.');
-    return collections;
+    if (!collections.length) return rejectWithValue({ msg: 'No collections found for this principal.', principal });
+    return { collections, principal };
   } catch (err) {
-    return rejectWithValue('There was an error while getting collections.');
+    return rejectWithValue({ msg: 'There was an error while getting collections.', principal });
   }
 });
 
@@ -71,33 +71,35 @@ export const collectionSlice = createSlice({
         state.loading = false;
         state.error = undefined;
         state.collections = cols;
-        state.principalID = action.payload.principal;
         state.numberOfTokens = cols.reduce((a, b) => a + b.tokens.length, 0);
+        state.principalID = action.payload.principal;
       })
       .addCase(getCollections.rejected, (state, action) => {
         state.loading = false;
         state.collections = [];
-        state.error = action.payload;
+        state.error = action.payload?.msg;
         state.numberOfTokens = 0;
-        state.principalID = '';
+        state.principalID = action.payload?.principal || '';
       })
       .addCase(revalidateCollections.pending, (state) => {
         state.validating = true;
         state.error = undefined;
       })
       .addCase(revalidateCollections.fulfilled, (state, action) => {
-        const cols = action.payload;
+        const cols = action.payload.collections;
 
         state.validating = false;
         state.error = undefined;
         state.collections = cols;
         state.numberOfTokens = cols.reduce((a, b) => a + b.tokens.length, 0);
+        state.principalID = action.payload.principal;
       })
       .addCase(revalidateCollections.rejected, (state, action) => {
         state.validating = false;
         state.collections = [];
-        state.error = action.payload;
+        state.error = action.payload?.msg;
         state.numberOfTokens = 0;
+        state.principalID = action.payload?.principal || '';
       });
   },
 });

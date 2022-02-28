@@ -18,7 +18,7 @@ interface Form {
 
 export const Header = () => {
   const dispatch = useAppDispatch();
-  const { loading, collections } = useAppSelector((state) => state.collection);
+  const { loading, collections, validating } = useAppSelector((state) => state.collection);
   const { fetchingError } = useAppSelector((state) => state.common);
 
   const headingRef = React.useRef(null);
@@ -79,7 +79,7 @@ export const Header = () => {
                 <TextField
                   autoFocus
                   fullWidth
-                  disabled={loading || fetchingError}
+                  disabled={loading || fetchingError || validating}
                   id='principalInput'
                   placeholder='Enter your principal'
                   variant='outlined'
@@ -98,7 +98,7 @@ export const Header = () => {
 
             <LoadingButton
               loading={loading}
-              disabled={loading || fetchingError}
+              disabled={loading || fetchingError || validating}
               type='submit'
               variant='contained'
               sx={{ m: '0 !important', maxHeight: 40, minWidth: 0 }}
