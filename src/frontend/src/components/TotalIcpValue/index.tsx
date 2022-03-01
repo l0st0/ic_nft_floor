@@ -46,8 +46,8 @@ export const TotalIcpValue = () => {
 
   return (
     <>
-      <Stack flexDirection='row'>
-        <Typography variant='h5' fontWeight={600} mr={1}>
+      <Stack flexDirection='row' alignItems='flex-start'>
+        <Typography variant='h6' fontWeight={600} mr={1}>
           Total value
         </Typography>
 

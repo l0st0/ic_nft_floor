@@ -11,6 +11,7 @@ import { getCollections, revalidateCollections } from '../../store/collection/co
 import { Send } from '@mui/icons-material';
 import { LoadingButton } from '@mui/lab';
 import { ResetButtons } from '../ResetButtons';
+import { DonateButton } from '../DonateButton';
 
 interface Form {
   principal: string;
@@ -39,7 +40,8 @@ export const Header = () => {
     <>
       <Stack display='flex' justifyContent='space-between' alignItems='center' flexDirection='row'>
         <DfinityBadge />
-        <Stack flexDirection='row'>
+        <Stack flexDirection='row' ml={2}>
+          <DonateButton />
           <SocialButton />
           <ThemeButton />
         </Stack>
@@ -53,7 +55,7 @@ export const Header = () => {
             typography: {
               xs: { fontSize: 34 },
               sm: { fontSize: 40 },
-              md: { fontSize: 54 },
+              md: { fontSize: 48 },
             },
           }}
         >

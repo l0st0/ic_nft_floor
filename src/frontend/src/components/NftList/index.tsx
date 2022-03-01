@@ -1,5 +1,6 @@
-import { TrendingDown, TrendingUp } from '@mui/icons-material';
+import { TrendingDown, TrendingFlat, TrendingUp } from '@mui/icons-material';
 import { Avatar, Grid, List, ListItem, ListItemAvatar, ListItemText, Stack, Typography } from '@mui/material';
+import { grey } from '@mui/material/colors';
 import { Box } from '@mui/system';
 import { useAppSelector } from '../../hooks';
 import { formatPrice, modifyCollections } from '../../utils';
@@ -15,7 +16,7 @@ export const NftList = () => {
 
   return (
     <Stack mt={5}>
-      <Typography variant='h5' fontWeight={600} mb={1}>
+      <Typography variant='h6' fontWeight={600}>
         Collection of {numberOfTokens} tokens
       </Typography>
 
@@ -30,13 +31,18 @@ export const NftList = () => {
           const renderPercent = (percent: number) => (
             <>
               <Box
-                component={percent < 0 ? TrendingUp : TrendingDown}
-                sx={{ color: percent < 0 ? 'success.dark' : 'error.dark', fontSize: '14px', verticalAlign: 'sub' }}
+                component={percent < 0 ? TrendingUp : percent === 0 ? TrendingFlat : TrendingDown}
+                sx={{
+                  color: percent < 0 ? 'success.dark' : percent === 0 ? grey[500] : 'error.dark',
+                  fontSize: '14px',
+                  verticalAlign: 'sub',
+                  ml: '2px',
+                }}
               ></Box>
               <Box
                 component='span'
                 sx={{
-                  color: percent < 0 ? 'success.dark' : 'error.dark',
+                  color: percent < 0 ? 'success.dark' : percent === 0 ? grey[500] : 'error.dark',
                   display: 'inline',
                   fontWeight: 'medium',
                   mx: 0.5,
@@ -108,7 +114,7 @@ export const NftList = () => {
                                 >
                                   1h
                                 </Typography>
-                                {` — `} {renderPercent(hourPercent)}
+                                {renderPercent(hourPercent)}
                               </span>
                             ) : null}
                             {dayOldPrice ? (
@@ -121,7 +127,7 @@ export const NftList = () => {
                                 >
                                   24h
                                 </Typography>
-                                {` — `} {renderPercent(dayPercent)}
+                                {renderPercent(dayPercent)}
                               </span>
                             ) : null}
                           </>

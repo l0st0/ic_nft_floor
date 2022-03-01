@@ -41,16 +41,18 @@ export const ResetButtons = () => {
         </LoadingButton>
       </Tooltip>
       <div>
-        <Button
+        <LoadingButton
           id='basic-button'
           aria-controls={open ? 'basic-menu' : undefined}
           aria-haspopup='true'
           aria-expanded={open ? 'true' : undefined}
           onClick={handleClick}
           startIcon={<ArrowDownward />}
+          loading={listingLoading || statsLoading || priceLoading}
+          loadingPosition='start'
         >
-          More
-        </Button>
+          Refresh
+        </LoadingButton>
         <Menu
           id='basic-menu'
           anchorEl={anchorEl}
