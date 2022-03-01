@@ -66,6 +66,11 @@ export const Home = () => {
   }
 
   if (!collections.length && !principalID.length) return null;
+  // return (
+  //   <Stack alignItems='center' spacing={2}>
+  //     <span>There might be some problem with fetching collections because of subnet.</span>
+  //   </Stack>
+  // );
 
   return (
     <>

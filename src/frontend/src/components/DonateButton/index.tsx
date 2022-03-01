@@ -15,14 +15,15 @@ const Transition = React.forwardRef(function Transition(
 });
 
 export const DonateButton = () => {
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = React.useState(localStorage.getItem('showDonate') || '1');
 
   const handleClickOpen = () => {
-    setOpen(true);
+    setOpen('1');
   };
 
   const handleClose = () => {
-    setOpen(false);
+    setOpen('0');
+    localStorage.setItem('showDonate', '0');
   };
 
   return (
@@ -32,7 +33,7 @@ export const DonateButton = () => {
       </Button>
 
       <Dialog
-        open={open}
+        open={open === '1'}
         TransitionComponent={Transition}
         keepMounted
         onClose={handleClose}

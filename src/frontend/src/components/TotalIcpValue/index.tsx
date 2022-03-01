@@ -2,6 +2,7 @@ import { Button, Grid, Stack, Typography } from '@mui/material';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { toggleShowIcp } from '../../store/common/commonSlice';
 import { formatPrice, modifyCollections } from '../../utils';
+import { Chart } from '../Chart';
 import { StatsBox } from '../StatsBox';
 
 export const TotalIcpValue = () => {
@@ -55,6 +56,8 @@ export const TotalIcpValue = () => {
           Switch to {!showIcp ? 'ICP' : 'USD'}
         </Button>
       </Stack>
+
+      <Chart />
 
       <Grid container spacing={2} rowSpacing={1} mb={3} mt={1} textAlign='center'>
         <Grid item>{displayBox('actual')}</Grid>
