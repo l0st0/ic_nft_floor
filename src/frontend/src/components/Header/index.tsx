@@ -33,7 +33,7 @@ export const Header = () => {
 
   const onSubmit = async ({ principal }: Form) => {
     await dispatch(getCollections({ principal }));
-    // await dispatch(revalidateCollections({ principal }));
+    await dispatch(revalidateCollections({ principal }));
   };
 
   return (

@@ -44,6 +44,7 @@ export const DonateButton = () => {
             alignItems: 'flex-start',
           },
         }}
+        disableScrollLock
       >
         <DialogTitle sx={{ fontWeight: 600 }}>
           Buy me a beer <BeerIcon width={28} height={28} style={{ marginBottom: -4 }} />

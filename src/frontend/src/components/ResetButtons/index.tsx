@@ -1,7 +1,6 @@
-import { ArrowDownward, Refresh } from '@mui/icons-material';
+import { Refresh } from '@mui/icons-material';
 import { LoadingButton } from '@mui/lab';
-import { Button, Menu, MenuItem, Tooltip } from '@mui/material';
-import React from 'react';
+import { Tooltip } from '@mui/material';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { revalidateCollections } from '../../store/collection/collectionSlice';
 import { getListings } from '../../store/listing/listingSlice';
@@ -17,89 +16,36 @@ export const ResetButtons = () => {
   const { loading: priceLoading } = useAppSelector((state) => state.price);
   const { fetchingError } = useAppSelector((state) => state.common);
 
-  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-  const open = Boolean(anchorEl);
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    setAnchorEl(event.currentTarget);
-  };
-  const handleClose = () => {
-    setAnchorEl(null);
+  const resetData = () => {
+    dispatch(getListings());
+    dispatch(getStats());
+    dispatch(getPrice());
   };
 
   return (
     <>
-      <Tooltip title='Use to update when you bought or sold NFT'>
+      <Tooltip disableFocusListener title='Use when you bought or sold NFT'>
         <LoadingButton
           onClick={() => dispatch(revalidateCollections({ principal: principalID }))}
-          variant='text'
           loading={validating}
           disabled={fetchingError}
           loadingPosition='start'
           startIcon={<Refresh />}
         >
-          {validating ? 'Revalidating collections' : 'Revalidate collections'}
+          {validating ? 'Validating collection' : 'Validate collection'}
         </LoadingButton>
       </Tooltip>
-      <div>
+      <Tooltip disableFocusListener title='Validate listings, stats and price'>
         <LoadingButton
-          id='basic-button'
-          aria-controls={open ? 'basic-menu' : undefined}
-          aria-haspopup='true'
-          aria-expanded={open ? 'true' : undefined}
-          onClick={handleClick}
-          startIcon={<ArrowDownward />}
+          onClick={resetData}
+          disabled={fetchingError}
           loading={listingLoading || statsLoading || priceLoading}
           loadingPosition='start'
+          startIcon={<Refresh />}
         >
-          Refresh
+          {listingLoading || statsLoading || priceLoading ? 'Validating data' : 'Validate data'}
         </LoadingButton>
-        <Menu
-          id='basic-menu'
-          anchorEl={anchorEl}
-          open={open}
-          onClose={handleClose}
-          MenuListProps={{
-            'aria-labelledby': 'basic-button',
-          }}
-        >
-          <MenuItem>
-            <LoadingButton
-              onClick={() => dispatch(getListings())}
-              variant='text'
-              loading={listingLoading}
-              disabled={fetchingError}
-              loadingPosition='start'
-              startIcon={<Refresh />}
-            >
-              Listings
-            </LoadingButton>{' '}
-          </MenuItem>
-          <MenuItem>
-            <LoadingButton
-              onClick={() => dispatch(getStats())}
-              variant='text'
-              loading={statsLoading}
-              disabled={fetchingError}
-              loadingPosition='start'
-              startIcon={<Refresh />}
-            >
-              Stats
-            </LoadingButton>
-          </MenuItem>
-          <MenuItem>
-            <LoadingButton
-              onClick={() => dispatch(getPrice())}
-              variant='text'
-              loading={priceLoading}
-              disabled={fetchingError}
-              loadingPosition='start'
-              startIcon={<Refresh />}
-            >
-              Price
-            </LoadingButton>
-          </MenuItem>
-        </Menu>
-      </div>
+      </Tooltip>
     </>
   );
 };
