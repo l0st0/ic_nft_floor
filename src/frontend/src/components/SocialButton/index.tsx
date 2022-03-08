@@ -24,9 +24,7 @@ export const SocialButton = () => {
       <Dialog
         open={open}
         TransitionComponent={Transition}
-        keepMounted
         onClose={handleClose}
-        aria-describedby='alert-dialog-slide-description'
         sx={{
           '& .MuiDialog-container': {
             justifyContent: 'center',

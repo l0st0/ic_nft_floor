@@ -33,9 +33,7 @@ export const PrincipalListButton = ({ setValue }: PrincipalListButtonProps) => {
         open={open}
         fullWidth
         TransitionComponent={Transition}
-        keepMounted
         onClose={handleClose}
-        aria-describedby='alert-dialog-slide-description'
         sx={{
           '& .MuiDialog-container': {
             justifyContent: 'center',
