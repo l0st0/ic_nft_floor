@@ -9,9 +9,6 @@ import { getDesignTokens } from './styles';
 
 function App() {
   const { mode } = useAppSelector((state) => state.common);
-  const { stats } = useAppSelector((state) => state.data);
-
-  console.log('stats', stats);
 
   const muiTheme = React.useMemo(() => {
     return createTheme(getDesignTokens(mode));
