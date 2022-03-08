@@ -1,39 +1,18 @@
 import ReactApexChart from 'react-apexcharts';
 import { useAppSelector } from '../../hooks';
-import { selectModifyCollection } from '../../store/selectors';
+import { selectChartData, selectModifyCollection } from '../../store/selectors';
 import { formatPrice } from '../../utils';
 
 export const Chart = () => {
-  const { collections } = useAppSelector((state) => state.collection);
-  const { stats, price } = useAppSelector((state) => state.data);
+  const { price } = useAppSelector((state) => state.data);
   const { showIcp, mode } = useAppSelector((state) => state.common);
   const { totalCollectionsPrice } = useAppSelector(selectModifyCollection);
-
-  const modStats = stats.map((stat) => {
-    const filterCanistersByCollection = stat.data
-      .filter((item) => {
-        return collections.some((c) => c.canisterId === item.canisterId);
-      })
-      .map((item) => {
-        const find = collections.find((c) => item.canisterId === c.canisterId);
-
-        if (find?.tokens.length) {
-          return find.tokens.length * item.price;
-        }
-
-        return 0;
-      })
-      .reduce((a, b) => a + b, 0);
-
-    return { time: new Date(stat.time), price: filterCanistersByCollection };
-  });
-
-  modStats.unshift({ time: new Date(), price: totalCollectionsPrice.actual });
+  const chartData = useAppSelector((state) => selectChartData(state, totalCollectionsPrice.actual));
 
   const series = [
     {
       name: `Total ${showIcp ? 'ICP' : 'USD'} value`,
-      data: modStats.map((item) => item.price),
+      data: chartData.map((item) => item.price),
     },
   ];
 
@@ -71,7 +50,7 @@ export const Chart = () => {
     },
     xaxis: {
       type: 'datetime',
-      categories: modStats.map((item) => item.time.getTime()),
+      categories: chartData.map((item) => item.time.getTime()),
     },
     tooltip: {
       y: {

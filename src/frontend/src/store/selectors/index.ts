@@ -41,3 +41,35 @@ export const selectModifyCollection = createSelector(
     return { collectionWithPrice, totalCollectionsPrice };
   }
 );
+
+export const selectChartData = createSelector(
+  (state: RootState) => state,
+  (_: any, actualPrice: number) => actualPrice,
+  ({ data, collection }, actualPrice) => {
+    const { stats } = data;
+    const { collections } = collection;
+
+    const chartData = stats.map((stat) => {
+      const filterCanistersByCollection = stat.data
+        .filter((item) => {
+          return collections.some((c) => c.canisterId === item.canisterId);
+        })
+        .map((item) => {
+          const find = collections.find((c) => item.canisterId === c.canisterId);
+
+          if (find?.tokens.length) {
+            return find.tokens.length * item.price;
+          }
+
+          return 0;
+        })
+        .reduce((a, b) => a + b, 0);
+
+      return { time: new Date(stat.time), price: filterCanistersByCollection };
+    });
+
+    chartData.unshift({ time: new Date(), price: actualPrice });
+
+    return chartData;
+  }
+);
