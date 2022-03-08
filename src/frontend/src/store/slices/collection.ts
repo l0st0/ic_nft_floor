@@ -61,13 +61,13 @@ export const collectionSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(getCollections.pending, (state) => {
-        state.loading = true;
         state.error = undefined;
       })
       .addCase(getCollections.fulfilled, (state, action) => {
         const cols = action.payload.collections;
 
         state.loading = false;
+        state.validating = false;
         state.error = undefined;
         state.collections = cols;
         state.numberOfTokens = cols.reduce((a, b) => a + b.tokens.length, 0);
@@ -77,6 +77,7 @@ export const collectionSlice = createSlice({
       })
       .addCase(getCollections.rejected, (state, action) => {
         state.loading = false;
+        state.validating = false;
         state.collections = [];
         state.error = action.payload?.msg;
         state.numberOfTokens = 0;
