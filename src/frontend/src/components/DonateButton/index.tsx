@@ -1,18 +1,9 @@
 import { ContentCopy } from '@mui/icons-material';
-import { Button, Dialog, DialogContent, DialogContentText, DialogTitle, IconButton, Slide, Stack } from '@mui/material';
-import { TransitionProps } from '@mui/material/transitions';
+import { Button, Dialog, DialogContent, DialogContentText, DialogTitle, IconButton, Stack } from '@mui/material';
 import React from 'react';
 import { BeerIcon } from '../icons';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
-
-const Transition = React.forwardRef(function Transition(
-  props: TransitionProps & {
-    children: React.ReactElement<any, any>;
-  },
-  ref: React.Ref<unknown>
-) {
-  return <Slide direction='down' ref={ref} {...props} />;
-});
+import { Transition } from '../DialogTransition';
 
 export const DonateButton = () => {
   const [open, setOpen] = React.useState(localStorage.getItem('showDonate') || '1');

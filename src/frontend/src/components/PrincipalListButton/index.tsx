@@ -1,17 +1,8 @@
 import { Add, PlaylistAdd } from '@mui/icons-material';
-import { Button, Dialog, DialogContent, DialogTitle, IconButton, Slide } from '@mui/material';
-import { TransitionProps } from '@mui/material/transitions';
+import { Button, Dialog, DialogContent, DialogTitle, IconButton } from '@mui/material';
 import React from 'react';
 import { UseFormSetValue } from 'react-hook-form';
-
-const Transition = React.forwardRef(function Transition(
-  props: TransitionProps & {
-    children: React.ReactElement<any, any>;
-  },
-  ref: React.Ref<unknown>
-) {
-  return <Slide direction='down' ref={ref} {...props} />;
-});
+import { Transition } from '../DialogTransition';
 
 interface PrincipalListButtonProps {
   setValue: UseFormSetValue<{ principalID: string }>;

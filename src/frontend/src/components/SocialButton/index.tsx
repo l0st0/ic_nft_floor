@@ -1,17 +1,8 @@
 import Twitter from '@mui/icons-material/Twitter';
-import { Dialog, DialogContent, DialogContentText, DialogTitle, Grid, IconButton, Link, Slide } from '@mui/material';
-import { TransitionProps } from '@mui/material/transitions';
+import { Dialog, DialogContent, DialogContentText, DialogTitle, Grid, IconButton, Link } from '@mui/material';
 import React from 'react';
+import { Transition } from '../DialogTransition';
 import { ConnectIcon } from '../icons';
-
-const Transition = React.forwardRef(function Transition(
-  props: TransitionProps & {
-    children: React.ReactElement<any, any>;
-  },
-  ref: React.Ref<unknown>
-) {
-  return <Slide direction='down' ref={ref} {...props} />;
-});
 
 export const SocialButton = () => {
   const [open, setOpen] = React.useState(false);
