@@ -4,13 +4,11 @@ import { formatPrice, modifyCollections } from '../../utils';
 
 export const Chart = () => {
   const { collections } = useAppSelector((state) => state.collection);
-  const { stats } = useAppSelector((state) => state.stats);
-  const { listings } = useAppSelector((state) => state.listing);
-  const { price } = useAppSelector((state) => state.price);
+  const { stats, listings, price } = useAppSelector((state) => state.data);
   const { showIcp, mode } = useAppSelector((state) => state.common);
 
-  const modStats = stats.map((item) => {
-    const filter = item.data
+  const modStats = stats.map((stat) => {
+    const filterCanistersByCollection = stat.data
       .filter((item) => {
         return collections.some((c) => c.canisterId === item.canisterId);
       })
@@ -22,11 +20,10 @@ export const Chart = () => {
         }
 
         return 0;
-      });
+      })
+      .reduce((a, b) => a + b, 0);
 
-    const calculate = filter.reduce((a, b) => a + b, 0);
-
-    return { time: new Date(item.time), price: calculate };
+    return { time: new Date(stat.time), price: filterCanistersByCollection };
   });
 
   const { totalCollectionsPrice } = modifyCollections({ collections, stats, listings });

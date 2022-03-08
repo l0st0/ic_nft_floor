@@ -2,48 +2,42 @@ import { Refresh } from '@mui/icons-material';
 import { LoadingButton } from '@mui/lab';
 import { Tooltip } from '@mui/material';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { revalidateCollections } from '../../store/collection/collectionSlice';
-import { getListings } from '../../store/listing/listingSlice';
-import { getPrice } from '../../store/price/priceSlice';
-import { getStats } from '../../store/stats/statsSlice';
+import { revalidateCollections } from '../../store/slices/collection';
+import { validateData } from '../../store/slices/data';
 
 export const ResetButtons = () => {
   const dispatch = useAppDispatch();
 
-  const { validating, principalID } = useAppSelector((state) => state.collection);
-  const { loading: listingLoading } = useAppSelector((state) => state.listing);
-  const { loading: statsLoading } = useAppSelector((state) => state.stats);
-  const { loading: priceLoading } = useAppSelector((state) => state.price);
-  const { fetchingError } = useAppSelector((state) => state.common);
+  const { validating } = useAppSelector((state) => state.collection);
+  const { validating: dataValidating, error } = useAppSelector((state) => state.data);
 
   const resetData = () => {
-    dispatch(getListings());
-    dispatch(getStats());
-    dispatch(getPrice());
+    dispatch(validateData());
   };
 
   return (
     <>
       <Tooltip disableFocusListener title='Use when you bought or sold NFT'>
         <LoadingButton
-          onClick={() => dispatch(revalidateCollections({ principal: principalID }))}
+          onClick={() => dispatch(revalidateCollections())}
           loading={validating}
-          disabled={fetchingError}
+          disabled={!!error}
           loadingPosition='start'
           startIcon={<Refresh />}
         >
           {validating ? 'Validating collection' : 'Validate collection'}
         </LoadingButton>
       </Tooltip>
+
       <Tooltip disableFocusListener title='Validate listings, stats and price'>
         <LoadingButton
           onClick={resetData}
-          disabled={fetchingError}
-          loading={listingLoading || statsLoading || priceLoading}
+          disabled={!!error}
+          loading={dataValidating}
           loadingPosition='start'
           startIcon={<Refresh />}
         >
-          {listingLoading || statsLoading || priceLoading ? 'Validating data' : 'Validate data'}
+          {dataValidating ? 'Validating data' : 'Reset data'}
         </LoadingButton>
       </Tooltip>
     </>

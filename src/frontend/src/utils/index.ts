@@ -38,33 +38,8 @@ export const transformCollectionResponse = (collections: NFTCollection[]): NFTCo
     .filter((item) => {
       const findSame = removeFromCanisterList.some((can) => can === item.canisterId);
 
-      if (findSame) return false;
-
-      return true;
+      return !findSame;
     });
-
-export const sortByObjectKey = (unordered: {}) => {
-  return Object.keys(unordered)
-    .sort()
-    .reduce((obj: any, key) => {
-      // @ts-ignore
-      obj[key] = unordered[key];
-      return obj;
-    }, {});
-};
-
-export const sortCollection = (col: ModNFTCollectionType[]): ModNFTCollectionType[] => {
-  return col.map((item) => {
-    const sortItems = sortByObjectKey(item);
-    const tokens = item.tokens.map((data) => {
-      const sortTokens = sortByObjectKey(data);
-
-      return sortTokens;
-    });
-
-    return { ...sortItems, tokens };
-  });
-};
 
 export const formatPrice = (price: number, digits = 0, currency = false) => {
   const options: { style?: string; currency?: string } = {};

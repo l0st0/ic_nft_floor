@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { backend } from '../../../../declarations/backend';
 
-const getPriceData = async () => {
+const getPrice = async () => {
   const { date, price } = await backend.getPrice();
 
   const newDate = new Date().getTime();
@@ -29,6 +29,4 @@ const getPriceData = async () => {
   return usd;
 };
 
-const collectionService = { getPriceData };
-
-export default collectionService;
+export default { getPrice };

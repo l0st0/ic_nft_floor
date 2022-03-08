@@ -7,9 +7,7 @@ import { formatPrice, modifyCollections } from '../../utils';
 
 export const NftList = () => {
   const { collections, numberOfTokens } = useAppSelector((state) => state.collection);
-  const { listings } = useAppSelector((state) => state.listing);
-  const { stats } = useAppSelector((state) => state.stats);
-  const { price } = useAppSelector((state) => state.price);
+  const { listings, stats, price } = useAppSelector((state) => state.data);
   const { mode, showIcp } = useAppSelector((state) => state.common);
 
   const { data } = modifyCollections({ collections, listings, stats });

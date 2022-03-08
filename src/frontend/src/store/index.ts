@@ -1,17 +1,14 @@
 import { configureStore } from '@reduxjs/toolkit';
-import collectionSlice from './collection/collectionSlice';
-import commonSlice from './common/commonSlice';
-import listingSlice from './listing/listingSlice';
-import statsSlice from './stats/statsSlice';
-import priceSlice from './price/priceSlice';
+
+import collectionSlice from './slices/collection';
+import commonSlice from './slices/common';
+import dataSlice from './slices/data';
 
 export const store = configureStore({
   reducer: {
     common: commonSlice,
     collection: collectionSlice,
-    listing: listingSlice,
-    stats: statsSlice,
-    price: priceSlice,
+    data: dataSlice,
   },
 });
 

@@ -2,30 +2,16 @@ import React from 'react';
 import CssBaseline from '@mui/material/CssBaseline';
 import { ThemeProvider } from '@mui/material/styles';
 import Routes from './routes';
-import { Header } from './components/Header';
+import { Search } from './components/Search';
 import ScrollToTop from './components/ScrollToTop';
-import { useAppDispatch, useAppSelector } from './hooks';
+import { useAppSelector } from './hooks';
 import { createTheme } from '@mui/material';
 import { getDesignTokens } from './styles';
-import { getPrice } from './store/price/priceSlice';
-import { getListings } from './store/listing/listingSlice';
-import { getStats } from './store/stats/statsSlice';
+import { TopBar } from './components/TopBar';
 
 function App() {
   const { mode } = useAppSelector((state) => state.common);
-
-  const dispatch = useAppDispatch();
-  const { stats } = useAppSelector((state) => state.stats);
-
-  React.useEffect(() => {
-    const get = async () => {
-      dispatch(getPrice());
-      dispatch(getListings());
-      dispatch(getStats());
-    };
-
-    get();
-  }, []);
+  const { stats } = useAppSelector((state) => state.data);
 
   console.log('stats', stats);
 
@@ -37,7 +23,8 @@ function App() {
     <ThemeProvider theme={muiTheme}>
       <ScrollToTop />
       <CssBaseline />
-      <Header />
+      <TopBar />
+      <Search />
       <Routes />
     </ThemeProvider>
   );

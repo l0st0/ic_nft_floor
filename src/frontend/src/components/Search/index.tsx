@@ -1,26 +1,23 @@
 import React from 'react';
-import { Stack, TextField } from '@mui/material';
+import { Stack, TextField, Typography } from '@mui/material';
 import useComponentSize from '@rehooks/component-size';
-import { ThemeButton } from '../ThemeButton';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { Controller, useForm } from 'react-hook-form';
-import { DfinityBadge } from '../DfinityBadge';
-import { StyledMainHeading } from './styles';
-import { SocialButton } from '../SocialButton';
-import { getCollections, revalidateCollections } from '../../store/collection/collectionSlice';
 import { Send } from '@mui/icons-material';
 import { LoadingButton } from '@mui/lab';
 import { ResetButtons } from '../ResetButtons';
-import { DonateButton } from '../DonateButton';
+import { PrincipalListButton } from '../PrincipalListButton';
+import { getCollections, revalidateCollections } from '../../store/slices/collection';
+import { getData } from '../../store/slices/data';
 
 interface Form {
-  principal: string;
+  principalID: string;
 }
 
-export const Header = () => {
+export const Search = () => {
   const dispatch = useAppDispatch();
-  const { loading, collections, validating } = useAppSelector((state) => state.collection);
-  const { fetchingError } = useAppSelector((state) => state.common);
+  const { loading, collections, validating, principalID, principalList } = useAppSelector((state) => state.collection);
+  const { loading: dataLoading, error: dataError, validating: validatingData } = useAppSelector((state) => state.data);
 
   const headingRef = React.useRef(null);
   const { width } = useComponentSize(headingRef);
@@ -28,27 +25,22 @@ export const Header = () => {
   const {
     control,
     handleSubmit,
+    setValue,
     formState: { errors },
-  } = useForm<Form>();
+  } = useForm<Form>({ defaultValues: { principalID } });
 
-  const onSubmit = async ({ principal }: Form) => {
-    await dispatch(getCollections({ principal }));
-    await dispatch(revalidateCollections({ principal }));
+  const onSubmit = async ({ principalID }: Form) => {
+    await dispatch(getData());
+    await dispatch(getCollections({ principalID }));
+    await dispatch(revalidateCollections());
   };
+
+  const disabled = loading || validating || dataLoading || validatingData || !!dataError;
 
   return (
     <>
-      <Stack display='flex' justifyContent='space-between' alignItems='center' flexDirection='row'>
-        <DfinityBadge />
-        <Stack flexDirection='row' ml={2}>
-          <DonateButton />
-          <SocialButton />
-          <ThemeButton />
-        </Stack>
-      </Stack>
-
-      <Stack display='flex' alignItems='center' width='100%' padding={3} mb={1} textAlign='center'>
-        <StyledMainHeading
+      <Stack alignItems='center' padding={3} mb={1} textAlign='center'>
+        <Typography
           ref={headingRef}
           variant='h3'
           sx={{
@@ -60,7 +52,7 @@ export const Header = () => {
           }}
         >
           Calculate floor value of NFTs
-        </StyledMainHeading>
+        </Typography>
         <Stack
           component='form'
           onSubmit={handleSubmit(onSubmit)}
@@ -74,33 +66,33 @@ export const Header = () => {
           <Stack flexDirection='row' width='100%'>
             <Controller
               control={control}
-              name='principal'
-              defaultValue={localStorage.getItem('principal') || ''}
+              name='principalID'
               rules={{ required: true, maxLength: 63, minLength: 63 }}
               render={({ field: { value, onChange } }) => (
                 <TextField
                   autoFocus
                   fullWidth
-                  disabled={loading || fetchingError || validating}
+                  disabled={disabled}
                   id='principalInput'
                   placeholder='Enter your principal'
                   variant='outlined'
-                  error={!!errors.principal}
-                  helperText={!!errors.principal && 'Enter valid principal.'}
-                  sx={{ mr: 2 }}
+                  error={!!errors.principalID}
+                  helperText={!!errors.principalID && 'Enter valid principal.'}
                   value={value}
                   size='small'
                   onChange={(e) => {
-                    localStorage.setItem('principal', e.target.value);
                     onChange(e.target.value);
                   }}
                 />
               )}
             />
 
+            <Stack mx={1}></Stack>
+            {/* <PrincipalListButton setValue={setValue} /> */}
+
             <LoadingButton
-              loading={loading}
-              disabled={loading || fetchingError || validating}
+              loading={loading || dataLoading}
+              disabled={disabled}
               type='submit'
               variant='contained'
               sx={{ m: '0 !important', maxHeight: 40, minWidth: 0 }}

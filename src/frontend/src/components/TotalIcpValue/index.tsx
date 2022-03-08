@@ -1,6 +1,6 @@
 import { Button, Grid, Stack, Typography } from '@mui/material';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { toggleShowIcp } from '../../store/common/commonSlice';
+import { toggleShowIcp } from '../../store/slices/common';
 import { formatPrice, modifyCollections } from '../../utils';
 import { Chart } from '../Chart';
 import { StatsBox } from '../StatsBox';
@@ -8,9 +8,7 @@ import { StatsBox } from '../StatsBox';
 export const TotalIcpValue = () => {
   const { showIcp } = useAppSelector((state) => state.common);
   const { collections } = useAppSelector((state) => state.collection);
-  const { listings } = useAppSelector((state) => state.listing);
-  const { stats } = useAppSelector((state) => state.stats);
-  const { price } = useAppSelector((state) => state.price);
+  const { listings, stats, price } = useAppSelector((state) => state.data);
 
   const dispatch = useAppDispatch();
 

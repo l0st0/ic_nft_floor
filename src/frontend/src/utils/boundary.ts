@@ -16,7 +16,7 @@ export const getActor = (idlFactory: IDL.InterfaceFactory, canisterId: string) =
   });
 };
 
-export const callCanister = async (actor: ActorSubclass<any>, method: string, account?: string): Promise<any> => {
+export const callCanister = async (actor: ActorSubclass<any>, method: 'stats', account?: string): Promise<any> => {
   try {
     if (account) {
       return await actor[method](account);

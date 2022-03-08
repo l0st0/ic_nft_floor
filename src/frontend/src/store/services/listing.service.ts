@@ -4,7 +4,7 @@ import { backend } from '../../../../declarations/backend';
 import axios from 'axios';
 import { Canister } from '../../types';
 
-//@ts-ignore
+// @ts-ignore
 import { idlFactory } from '../../dids/ape.did';
 
 const getListingData = async () => {
@@ -48,6 +48,4 @@ const updateCanisters = async () => {
   return cans;
 };
 
-const listingService = { getListingData, updateCanisters };
-
-export default listingService;
+export default { updateCanisters, getListingData };
