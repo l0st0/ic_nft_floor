@@ -51,38 +51,3 @@ export const formatPrice = (price: number, digits = 0, currency = false) => {
 
   return price.toLocaleString('en-US', { ...options, maximumFractionDigits: digits });
 };
-
-export const modifyCollections = ({ collections, listings, stats }: ModifyCollectionsInterface) => {
-  const data = collections
-    .map((item) => {
-      const listingData = listings.find((data) => data.canisterId === item.canisterId);
-
-      const statData = stats.map((stat) => {
-        const filterData = stat.data.filter(({ canisterId }) => canisterId === item.canisterId);
-
-        const price = filterData[0]?.price || 0;
-
-        return { time: stat.time, price: price * item.tokens.length };
-      });
-
-      let floorPrice = 0;
-      let totalPrice = 0;
-
-      if (listingData) {
-        floorPrice = listingData.price;
-        totalPrice = listingData.price * item.tokens.length;
-      }
-
-      return { ...item, floorPrice, totalPrice, stats: statData };
-    })
-    .sort((a, b) => b.totalPrice - a.totalPrice);
-
-  const totalCollectionsPrice = {
-    actual: data.reduce((a, b) => a + b.totalPrice, 0),
-    oneHour: data.reduce((a, b) => a + b.stats[1]?.price || 0, 0),
-    day: data.reduce((a, b) => a + b.stats[24]?.price || 0, 0),
-    week: data.reduce((a, b) => a + b.stats[168]?.price || 0, 0),
-  };
-
-  return { data, totalCollectionsPrice };
-};

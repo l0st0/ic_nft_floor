@@ -1,11 +1,13 @@
 import ReactApexChart from 'react-apexcharts';
 import { useAppSelector } from '../../hooks';
-import { formatPrice, modifyCollections } from '../../utils';
+import { selectModifyCollection } from '../../store/selectors';
+import { formatPrice } from '../../utils';
 
 export const Chart = () => {
   const { collections } = useAppSelector((state) => state.collection);
-  const { stats, listings, price } = useAppSelector((state) => state.data);
+  const { stats, price } = useAppSelector((state) => state.data);
   const { showIcp, mode } = useAppSelector((state) => state.common);
+  const { totalCollectionsPrice } = useAppSelector(selectModifyCollection);
 
   const modStats = stats.map((stat) => {
     const filterCanistersByCollection = stat.data
@@ -25,8 +27,6 @@ export const Chart = () => {
 
     return { time: new Date(stat.time), price: filterCanistersByCollection };
   });
-
-  const { totalCollectionsPrice } = modifyCollections({ collections, stats, listings });
 
   modStats.unshift({ time: new Date(), price: totalCollectionsPrice.actual });
 

@@ -3,14 +3,14 @@ import { Avatar, Grid, List, ListItem, ListItemAvatar, ListItemText, Stack, Typo
 import { grey } from '@mui/material/colors';
 import { Box } from '@mui/system';
 import { useAppSelector } from '../../hooks';
-import { formatPrice, modifyCollections } from '../../utils';
+import { selectModifyCollection } from '../../store/selectors';
+import { formatPrice } from '../../utils';
 
 export const NftList = () => {
-  const { collections, numberOfTokens } = useAppSelector((state) => state.collection);
-  const { listings, stats, price } = useAppSelector((state) => state.data);
+  const { numberOfTokens } = useAppSelector((state) => state.collection);
+  const { price } = useAppSelector((state) => state.data);
   const { mode, showIcp } = useAppSelector((state) => state.common);
-
-  const { data } = modifyCollections({ collections, listings, stats });
+  const { collectionWithPrice } = useAppSelector(selectModifyCollection);
 
   return (
     <Stack mt={5}>
@@ -19,7 +19,7 @@ export const NftList = () => {
       </Typography>
 
       <Grid container spacing={2} rowSpacing={-1}>
-        {data.map((item, index) => {
+        {collectionWithPrice.map((item, index) => {
           const hourOldPrice = item.stats[1]?.price || 0;
           const dayOldPrice = item.stats[24]?.price || 0;
 
