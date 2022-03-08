@@ -27,32 +27,15 @@ const initialState: DataState = {
 
 export const getData = createAsyncThunk<
   { listings: Listing[]; stats: Stats[]; price: number },
-  void,
+  { validate?: boolean },
   {
     rejectValue: string;
     state: RootState;
   }
->('collection/getData', async (_, { rejectWithValue }) => {
+>('collection/getData', async ({ validate = false }, { rejectWithValue, dispatch }) => {
   try {
-    const listings = await listingService.getListingData();
-    const stats = await statsService.getStats();
-    const price = await priceService.getPrice();
+    dispatch(toggleLoading(validate));
 
-    return { listings, stats, price };
-  } catch (err) {
-    return rejectWithValue('There was an error while getting data.');
-  }
-});
-
-export const validateData = createAsyncThunk<
-  { listings: Listing[]; stats: Stats[]; price: number },
-  void,
-  {
-    rejectValue: string;
-    state: RootState;
-  }
->('collection/validateData', async (_, { rejectWithValue }) => {
-  try {
     const listings = await listingService.getListingData();
     const stats = await statsService.getStats();
     const price = await priceService.getPrice();
@@ -82,15 +65,23 @@ export const updateCanisters = createAsyncThunk<
 export const dataSlice = createSlice({
   name: 'data',
   initialState,
-  reducers: {},
+  reducers: {
+    toggleLoading: (state, action: PayloadAction<boolean>) => {
+      if (action.payload) {
+        state.validating = true;
+      } else {
+        state.loading = true;
+      }
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(getData.pending, (state) => {
-        state.loading = true;
         state.error = undefined;
       })
       .addCase(getData.fulfilled, (state, action) => {
         state.loading = false;
+        state.validating = false;
         state.error = undefined;
         state.listings = action.payload.listings;
         state.stats = action.payload.stats;
@@ -98,20 +89,6 @@ export const dataSlice = createSlice({
       })
       .addCase(getData.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.payload;
-      })
-      .addCase(validateData.pending, (state) => {
-        state.validating = true;
-        state.error = undefined;
-      })
-      .addCase(validateData.fulfilled, (state, action) => {
-        state.validating = false;
-        state.error = undefined;
-        state.listings = action.payload.listings;
-        state.stats = action.payload.stats;
-        state.price = action.payload.price;
-      })
-      .addCase(validateData.rejected, (state, action) => {
         state.validating = false;
         state.error = action.payload;
       })
@@ -129,7 +106,7 @@ export const dataSlice = createSlice({
   },
 });
 
-export const {} = dataSlice.actions;
+export const { toggleLoading } = dataSlice.actions;
 export const dataState = (state: RootState) => state.data;
 
 export default dataSlice.reducer;

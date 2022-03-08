@@ -29,13 +29,15 @@ const initialState: CollectionState = {
 
 export const getCollections = createAsyncThunk<
   { collections: NFTCollection[]; principalID: string },
-  { principalID: string },
+  { principalID: string; validate?: boolean },
   {
     rejectValue: { msg: string; principalID: string };
     state: RootState;
   }
->('collection/getCollections', async ({ principalID }, { rejectWithValue }) => {
+>('collection/getCollections', async ({ principalID, validate = false }, { rejectWithValue, dispatch }) => {
   try {
+    dispatch(toggleLoading(validate));
+
     const collections = await collectionService.getCollections({ principalID });
     if (!collections.length) return rejectWithValue({ msg: 'No collections found for this principal.', principalID });
     return { collections, principalID };
@@ -44,28 +46,18 @@ export const getCollections = createAsyncThunk<
   }
 });
 
-export const revalidateCollections = createAsyncThunk<
-  NFTCollection[],
-  void,
-  {
-    rejectValue: string;
-    state: RootState;
-  }
->('collection/revalidateCollections', async (_, { rejectWithValue, getState }) => {
-  try {
-    const { principalID } = getState().collection;
-    const collections = await collectionService.revalidateCollections({ principalID });
-    if (!collections.length) return rejectWithValue('No collections found for this principal.');
-    return collections;
-  } catch (err) {
-    return rejectWithValue('There was an error while getting collections.');
-  }
-});
-
 export const collectionSlice = createSlice({
   name: 'collection',
   initialState,
-  reducers: {},
+  reducers: {
+    toggleLoading: (state, action: PayloadAction<boolean>) => {
+      if (action.payload) {
+        state.validating = true;
+      } else {
+        state.loading = true;
+      }
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(getCollections.pending, (state) => {
@@ -91,29 +83,11 @@ export const collectionSlice = createSlice({
 
         localStorage.setItem('principal', action.payload?.principalID || '');
         state.principalID = action.payload?.principalID || '';
-      })
-      .addCase(revalidateCollections.pending, (state) => {
-        state.validating = true;
-        state.error = undefined;
-      })
-      .addCase(revalidateCollections.fulfilled, (state, action) => {
-        const cols = action.payload;
-
-        state.validating = false;
-        state.error = undefined;
-        state.collections = cols;
-        state.numberOfTokens = cols.reduce((a, b) => a + b.tokens.length, 0);
-      })
-      .addCase(revalidateCollections.rejected, (state, action) => {
-        state.validating = false;
-        state.collections = [];
-        state.error = action.payload;
-        state.numberOfTokens = 0;
       });
   },
 });
 
-export const {} = collectionSlice.actions;
+export const { toggleLoading } = collectionSlice.actions;
 export const collectionState = (state: RootState) => state.collection;
 
 export default collectionSlice.reducer;

@@ -4,7 +4,7 @@ import { Button, Stack } from '@mui/material';
 import { NftList } from '../components/NftList';
 import { TotalIcpValue } from '../components/TotalIcpValue';
 import { useAppDispatch, useAppSelector } from '../hooks';
-import { revalidateCollections } from '../store/slices/collection';
+import { getCollections } from '../store/slices/collection';
 import { getData } from '../store/slices/data';
 
 export const Home = () => {
@@ -17,7 +17,7 @@ export const Home = () => {
     return (
       <Stack alignItems='center' spacing={2}>
         <span>There was some error when fetching data</span>
-        <Button onClick={() => dispatch(getData())}>Fetch again</Button>
+        <Button onClick={() => dispatch(getData({}))}>Fetch again</Button>
       </Stack>
     );
   }
@@ -31,7 +31,7 @@ export const Home = () => {
           loading={validating}
           startIcon={<Refresh />}
           loadingPosition='start'
-          onClick={() => dispatch(revalidateCollections())}
+          onClick={() => dispatch(getCollections({ principalID, validate: true }))}
         >
           {validating ? 'Trying to fetch' : 'Try again'}
         </LoadingButton>

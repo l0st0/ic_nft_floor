@@ -7,7 +7,7 @@ import { Send } from '@mui/icons-material';
 import { LoadingButton } from '@mui/lab';
 import { ResetButtons } from '../ResetButtons';
 import { PrincipalListButton } from '../PrincipalListButton';
-import { getCollections, revalidateCollections } from '../../store/slices/collection';
+import { getCollections } from '../../store/slices/collection';
 import { getData } from '../../store/slices/data';
 
 interface Form {
@@ -30,9 +30,9 @@ export const Search = () => {
   } = useForm<Form>({ defaultValues: { principalID } });
 
   const onSubmit = async ({ principalID }: Form) => {
-    await dispatch(getData());
+    await dispatch(getData({}));
     await dispatch(getCollections({ principalID }));
-    await dispatch(revalidateCollections());
+    await dispatch(getCollections({ principalID, validate: true }));
   };
 
   const disabled = loading || validating || dataLoading || validatingData || !!dataError;

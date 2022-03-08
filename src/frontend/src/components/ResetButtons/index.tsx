@@ -2,24 +2,24 @@ import { Refresh } from '@mui/icons-material';
 import { LoadingButton } from '@mui/lab';
 import { Tooltip } from '@mui/material';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { revalidateCollections } from '../../store/slices/collection';
-import { validateData } from '../../store/slices/data';
+import { getCollections } from '../../store/slices/collection';
+import { getData } from '../../store/slices/data';
 
 export const ResetButtons = () => {
   const dispatch = useAppDispatch();
 
-  const { validating } = useAppSelector((state) => state.collection);
+  const { validating, principalID } = useAppSelector((state) => state.collection);
   const { validating: dataValidating, error } = useAppSelector((state) => state.data);
 
   const resetData = () => {
-    dispatch(validateData());
+    dispatch(getData({ validate: true }));
   };
 
   return (
     <>
       <Tooltip disableFocusListener title='Use when you bought or sold NFT'>
         <LoadingButton
-          onClick={() => dispatch(revalidateCollections())}
+          onClick={() => dispatch(getCollections({ principalID, validate: true }))}
           loading={validating}
           disabled={!!error}
           loadingPosition='start'
