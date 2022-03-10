@@ -1,9 +1,9 @@
 import { Stack } from '@mui/material';
 import React from 'react';
 import { DfinityBadge } from '../DfinityBadge';
-import { DonateButton } from '../DonateButton';
-import { SocialButton } from '../SocialButton';
-import { ThemeButton } from '../ThemeButton';
+import { DonateButton } from '../Buttons/DonateButton';
+import { SocialButton } from '../Buttons/SocialButton';
+import { ThemeButton } from '../Buttons/ThemeButton';
 
 export const TopBar = () => {
   return (

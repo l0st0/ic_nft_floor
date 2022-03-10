@@ -1,9 +1,9 @@
 import { ContentCopy } from '@mui/icons-material';
 import { Button, Dialog, DialogContent, DialogContentText, DialogTitle, IconButton, Stack } from '@mui/material';
 import React from 'react';
-import { BeerIcon } from '../icons';
+import { BeerIcon } from '../../icons';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
-import { Transition } from '../DialogTransition';
+import { Transition } from '../../DialogTransition';
 
 export const DonateButton = () => {
   const [open, setOpen] = React.useState(localStorage.getItem('showDonate') || '1');

@@ -1,9 +1,9 @@
 import { Refresh } from '@mui/icons-material';
 import { LoadingButton } from '@mui/lab';
 import { Tooltip } from '@mui/material';
-import { useAppDispatch, useAppSelector } from '../../hooks';
-import { getCollections } from '../../store/slices/collection';
-import { getData } from '../../store/slices/data';
+import { useAppDispatch, useAppSelector } from '../../../hooks';
+import { getCollections } from '../../../store/slices/collection';
+import { getData } from '../../../store/slices/data';
 
 export const ResetButtons = () => {
   const dispatch = useAppDispatch();

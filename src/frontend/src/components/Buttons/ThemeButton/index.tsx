@@ -4,9 +4,9 @@ import LightModeIcon from '@mui/icons-material/LightMode';
 import NightsStayIcon from '@mui/icons-material/NightsStay';
 import SettingsIcon from '@mui/icons-material/Settings';
 import { StyledToggleButtonGroup } from './styles';
-import { useAppDispatch, useAppSelector } from '../../hooks';
-import { ModeType } from '../../types';
-import { changeTheme } from '../../store/slices/common';
+import { useAppDispatch, useAppSelector } from '../../../hooks';
+import { ModeType } from '../../../types';
+import { changeTheme } from '../../../store/slices/common';
 
 export const ThemeButton = () => {
   const dispatch = useAppDispatch();

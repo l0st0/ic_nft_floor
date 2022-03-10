@@ -1,8 +1,8 @@
 import Twitter from '@mui/icons-material/Twitter';
 import { Dialog, DialogContent, DialogContentText, DialogTitle, Grid, IconButton, Link } from '@mui/material';
 import React from 'react';
-import { Transition } from '../DialogTransition';
-import { ConnectIcon } from '../icons';
+import { Transition } from '../../DialogTransition';
+import { ConnectIcon } from '../../icons';
 
 export const SocialButton = () => {
   const [open, setOpen] = React.useState(false);
