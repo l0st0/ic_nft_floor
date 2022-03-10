@@ -1,6 +1,6 @@
-import Twitter from '@mui/icons-material/Twitter';
-import { Dialog, DialogContent, DialogContentText, DialogTitle, Grid, IconButton, Link } from '@mui/material';
 import React from 'react';
+import { Twitter, GitHub } from '@mui/icons-material';
+import { Dialog, DialogContent, DialogContentText, DialogTitle, Grid, IconButton, Link } from '@mui/material';
 import { Transition } from '../../DialogTransition';
 import { ConnectIcon } from '../../icons';
 
@@ -63,6 +63,12 @@ export const SocialButton = () => {
                 target='_blank'
               >
                 <img src='/district_logo.jpeg' width={30} alt='discrikt' />
+              </Link>
+            </Grid>
+
+            <Grid item>
+              <Link component={IconButton} href='https://github.com/l0st0' rel='noreferrer' target='_blank'>
+                <GitHub sx={{ fontSize: 32 }} />
               </Link>
             </Grid>
           </Grid>
