@@ -18,7 +18,7 @@ export const NftList = () => {
         Collection of {numberOfTokens} tokens
       </Typography>
 
-      <Grid container spacing={2} rowSpacing={-1}>
+      <Grid container spacing={2} rowSpacing={1}>
         {collectionWithPrice.map((item, index) => {
           const hourOldPrice = item.stats[1]?.price || 0;
           const dayOldPrice = item.stats[24]?.price || 0;
@@ -52,8 +52,8 @@ export const NftList = () => {
           );
 
           return (
-            <Grid key={index} item>
-              <List sx={{ width: 283, maxWidth: 283, bgcolor: 'background.paper' }}>
+            <Grid key={index} item sx={{ width: { xs: '100%', md: 'auto' } }}>
+              <List sx={{ width: { xs: '100%', md: 283 }, bgcolor: 'background.paper' }}>
                 <ListItem
                   alignItems='flex-start'
                   sx={mode === 'dark' ? { border: '1px solid grey' } : { boxShadow: 2 }}
