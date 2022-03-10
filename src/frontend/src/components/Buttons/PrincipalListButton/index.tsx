@@ -2,7 +2,7 @@ import { Add, PlaylistAdd } from '@mui/icons-material';
 import { Button, Dialog, DialogContent, DialogTitle, IconButton } from '@mui/material';
 import React from 'react';
 import { UseFormSetValue } from 'react-hook-form';
-import { Transition } from '../DialogTransition';
+import { Transition } from '../../DialogTransition';
 
 interface PrincipalListButtonProps {
   setValue: UseFormSetValue<{ principalID: string }>;
