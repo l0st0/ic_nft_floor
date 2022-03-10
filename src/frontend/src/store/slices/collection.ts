@@ -2,7 +2,6 @@ import { NFTCollection } from '@psychedelic/dab-js';
 import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit';
 import type { RootState } from '..';
 import { collectionService } from '../services';
-// import { collections } from '../../data/dummy';
 
 const principalID = localStorage.getItem('principal') || '';
 const principalList = (JSON.parse(localStorage.getItem('principalList') as string) as string[]) || [];

@@ -57,15 +57,23 @@ export const TotalIcpValue = () => {
       <Chart />
 
       <Grid container spacing={2} rowSpacing={1} mb={3} mt={1} textAlign='center'>
-        <Grid item>{displayBox('actual')}</Grid>
+        <Grid sx={{ width: { xs: '100%', md: 'auto' } }} item>
+          {displayBox('actual')}
+        </Grid>
 
-        <Grid item>{displayBox('oneHour')}</Grid>
+        <Grid sx={{ width: { xs: '100%', md: 'auto' } }} item>
+          {displayBox('oneHour')}
+        </Grid>
 
-        <Grid item>{displayBox('day')}</Grid>
+        <Grid sx={{ width: { xs: '100%', md: 'auto' } }} item>
+          {displayBox('day')}
+        </Grid>
 
-        <Grid item>{displayBox('week')}</Grid>
+        <Grid sx={{ width: { xs: '100%', md: 'auto' } }} item>
+          {displayBox('week')}
+        </Grid>
 
-        <Grid item>
+        <Grid sx={{ width: { xs: '100%', md: 'auto' } }} item>
           <StatsBox title='More' value='SOON' />
         </Grid>
       </Grid>

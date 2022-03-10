@@ -22,7 +22,7 @@ export const StatsBox: React.FC<StatsBoxProps> = ({ title, value, percent = 0, h
         border: mode === 'dark' ? '1px solid grey' : 'none',
         borderRadius: 1,
         p: 2,
-        minWidth: 283,
+        width: { xs: '100%', md: 283 },
       }}
     >
       <Box sx={{ color: 'text.secondary' }}>{title}</Box>

@@ -16,11 +16,11 @@ export const getDesignTokens = (mode: PaletteMode) => ({
 
   breakpoints: {
     values: {
-      xs: 300,
-      sm: 600,
-      md: 900,
-      lg: 1200,
-      xl: 1536,
+      xs: 0,
+      sm: 300,
+      md: 644,
+      lg: 900,
+      xl: 1200,
     },
   },
 
