@@ -39,15 +39,15 @@ export const Search = () => {
 
   return (
     <>
-      <Stack alignItems='center' padding={3} mb={1} textAlign='center'>
+      <Stack alignItems='center' py={3} mb={1} textAlign='center'>
         <Typography
           ref={headingRef}
           variant='h3'
           sx={{
             typography: {
-              xs: { fontSize: 34 },
-              sm: { fontSize: 40 },
-              md: { fontSize: 48 },
+              xs: { fontSize: 27 },
+              sm: { fontSize: 34 },
+              md: { fontSize: 44 },
             },
           }}
         >
@@ -56,12 +56,12 @@ export const Search = () => {
         <Stack
           component='form'
           onSubmit={handleSubmit(onSubmit)}
-          width={width}
           mt={2}
           flexWrap='nowrap'
           maxWidth='100%'
           alignItems='normal'
           gap={0}
+          sx={{ width: { xs: '100%', md: width } }}
         >
           <Stack flexDirection='row' width='100%'>
             <Controller
