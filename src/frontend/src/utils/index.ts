@@ -1,5 +1,4 @@
 import { NFTCollection } from '@psychedelic/dab-js';
-import { ModifyCollectionsInterface, ModNFTCollectionType } from '../types';
 
 const removeFromCanisterList = ['vlhm2-4iaaa-aaaam-qaatq-cai', 'lhq4n-3yaaa-aaaai-qaniq-cai'];
 
