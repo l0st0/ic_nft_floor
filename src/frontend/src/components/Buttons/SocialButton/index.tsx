@@ -32,6 +32,7 @@ export const SocialButton = () => {
           },
         }}
         disableScrollLock
+        maxWidth={false}
       >
         <DialogTitle sx={{ fontWeight: 600, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
           Let's connect!

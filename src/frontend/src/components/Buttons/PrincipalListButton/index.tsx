@@ -41,6 +41,7 @@ export const PrincipalListButton = ({ setValue }: PrincipalListButtonProps) => {
           },
         }}
         disableScrollLock
+        maxWidth={false}
       >
         <DialogTitle sx={{ fontWeight: 600 }}>Principal ID list</DialogTitle>
         <DialogContent dividers>
