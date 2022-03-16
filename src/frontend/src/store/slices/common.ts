@@ -11,19 +11,9 @@ interface CommonState {
 
 const prefersDarkMode = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
 
-const getMode = () => {
-  const getFromLocalStorage = localStorage.getItem('mode') as ModeType;
-
-  if (!getFromLocalStorage || getFromLocalStorage === 'system') {
-    return prefersDarkMode ? 'dark' : 'light';
-  }
-
-  return getFromLocalStorage;
-};
-
 const initialState: CommonState = {
-  theme: (localStorage.getItem('mode') as ModeType) || 'system',
-  mode: getMode(),
+  theme: 'system',
+  mode: 'light',
   showIcp: true,
 };
 
@@ -32,7 +22,6 @@ export const commonSlice = createSlice({
   initialState,
   reducers: {
     changeTheme: (state, action: PayloadAction<ModeType>) => {
-      localStorage.setItem('mode', action.payload);
       state.theme = action.payload;
 
       if (action.payload === 'system') {

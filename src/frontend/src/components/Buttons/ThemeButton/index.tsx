@@ -12,6 +12,12 @@ export const ThemeButton = () => {
   const dispatch = useAppDispatch();
   const { theme, mode } = useAppSelector((state) => state.common);
 
+  React.useEffect(() => {
+    if (theme === 'system') {
+      dispatch(changeTheme(theme));
+    }
+  }, [theme]);
+
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
 
