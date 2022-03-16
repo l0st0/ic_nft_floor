@@ -7,6 +7,8 @@ interface CommonState {
   theme: ModeType;
   mode: PaletteMode;
   showIcp: boolean;
+  principalID: string;
+  principalList: { name: string; id: string }[];
 }
 
 const prefersDarkMode = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
@@ -15,6 +17,8 @@ const initialState: CommonState = {
   theme: 'system',
   mode: 'light',
   showIcp: true,
+  principalID: '',
+  principalList: [],
 };
 
 export const commonSlice = createSlice({
@@ -33,10 +37,13 @@ export const commonSlice = createSlice({
     toggleShowIcp: (state, action: PayloadAction<boolean>) => {
       state.showIcp = action.payload;
     },
+    signPrincipalID: (state, action: PayloadAction<string>) => {
+      state.principalID = action.payload;
+    },
   },
 });
 
-export const { changeTheme, toggleShowIcp } = commonSlice.actions;
+export const { changeTheme, toggleShowIcp, signPrincipalID } = commonSlice.actions;
 export const darkModeState = (state: RootState) => state.common;
 
 export default commonSlice.reducer;

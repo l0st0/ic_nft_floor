@@ -8,7 +8,8 @@ import { getData } from '../../../store/slices/data';
 export const ResetButtons = () => {
   const dispatch = useAppDispatch();
 
-  const { validating, principalID } = useAppSelector((state) => state.collection);
+  const { validating } = useAppSelector((state) => state.collection);
+  const { principalID } = useAppSelector((state) => state.common);
   const { validating: dataValidating, error } = useAppSelector((state) => state.data);
 
   const resetData = () => {

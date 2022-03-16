@@ -3,14 +3,9 @@ import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit';
 import type { RootState } from '..';
 import { collectionService } from '../services';
 
-const principalID = localStorage.getItem('principal') || '';
-const principalList = (JSON.parse(localStorage.getItem('principalList') as string) as string[]) || [];
-
 interface CollectionState {
   collections: NFTCollection[];
   numberOfTokens: number;
-  principalID: string;
-  principalList: string[];
   loading: boolean;
   validating: boolean;
   error?: string;
@@ -19,8 +14,6 @@ interface CollectionState {
 const initialState: CollectionState = {
   collections: [],
   numberOfTokens: 0,
-  principalID,
-  principalList,
   loading: false,
   validating: false,
   error: undefined,
@@ -70,9 +63,6 @@ export const collectionSlice = createSlice({
         state.error = undefined;
         state.collections = cols;
         state.numberOfTokens = cols.reduce((a, b) => a + b.tokens.length, 0);
-
-        localStorage.setItem('principal', action.payload.principalID);
-        state.principalID = action.payload.principalID;
       })
       .addCase(getCollections.rejected, (state, action) => {
         state.loading = false;
@@ -80,9 +70,6 @@ export const collectionSlice = createSlice({
         state.collections = [];
         state.error = action.payload?.msg;
         state.numberOfTokens = 0;
-
-        localStorage.setItem('principal', action.payload?.principalID || '');
-        state.principalID = action.payload?.principalID || '';
       });
   },
 });

@@ -9,6 +9,7 @@ import { ResetButtons } from '../Buttons/ResetButtons';
 import { PrincipalListButton } from '../Buttons/PrincipalListButton';
 import { getCollections } from '../../store/slices/collection';
 import { getData } from '../../store/slices/data';
+import { signPrincipalID } from '../../store/slices/common';
 
 interface Form {
   principalID: string;
@@ -16,7 +17,8 @@ interface Form {
 
 export const Search = () => {
   const dispatch = useAppDispatch();
-  const { loading, collections, validating, principalID, principalList } = useAppSelector((state) => state.collection);
+  const { loading, collections, validating } = useAppSelector((state) => state.collection);
+  const { principalID: defaultPrincipalID } = useAppSelector((state) => state.common);
   const { loading: dataLoading, error: dataError, validating: validatingData } = useAppSelector((state) => state.data);
 
   const headingRef = React.useRef(null);
@@ -27,9 +29,10 @@ export const Search = () => {
     handleSubmit,
     setValue,
     formState: { errors },
-  } = useForm<Form>({ defaultValues: { principalID } });
+  } = useForm<Form>({ defaultValues: { principalID: defaultPrincipalID } });
 
   const onSubmit = async ({ principalID }: Form) => {
+    await dispatch(signPrincipalID(principalID));
     await dispatch(getData({}));
     await dispatch(getCollections({ principalID }));
     await dispatch(getCollections({ principalID, validate: true }));
