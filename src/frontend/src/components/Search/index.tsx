@@ -8,8 +8,8 @@ import { LoadingButton } from '@mui/lab';
 import { ResetButtons } from '../Buttons/ResetButtons';
 import { PrincipalListButton } from '../Buttons/PrincipalListButton';
 import { getCollections } from '../../store/slices/collection';
-import { getData } from '../../store/slices/data';
 import { signPrincipalID } from '../../store/slices/common';
+import { getData } from '../../store/slices/data';
 
 interface Form {
   principalID: string;
@@ -32,7 +32,7 @@ export const Search = () => {
   } = useForm<Form>({ defaultValues: { principalID: defaultPrincipalID } });
 
   const onSubmit = async ({ principalID }: Form) => {
-    await dispatch(signPrincipalID(principalID));
+    dispatch(signPrincipalID(principalID));
     await dispatch(getData({}));
     await dispatch(getCollections({ principalID }));
     await dispatch(getCollections({ principalID, validate: true }));
@@ -57,8 +57,6 @@ export const Search = () => {
           Calculate floor value of NFTs
         </Typography>
         <Stack
-          component='form'
-          onSubmit={handleSubmit(onSubmit)}
           mt={2}
           flexWrap='nowrap'
           maxWidth='100%'
@@ -66,7 +64,13 @@ export const Search = () => {
           gap={0}
           sx={{ width: { xs: '100%', md: width } }}
         >
-          <Stack flexDirection='row' width='100%'>
+          <Stack
+            flexDirection='row'
+            alignItems='flex-start'
+            width='100%'
+            component='form'
+            onSubmit={handleSubmit(onSubmit)}
+          >
             <Controller
               control={control}
               name='principalID'
@@ -90,8 +94,7 @@ export const Search = () => {
               )}
             />
 
-            <Stack mx={1}></Stack>
-            {/* <PrincipalListButton setValue={setValue} /> */}
+            <PrincipalListButton setValue={setValue} />
 
             <LoadingButton
               loading={loading || dataLoading}

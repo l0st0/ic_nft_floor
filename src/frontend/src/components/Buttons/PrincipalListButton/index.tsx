@@ -1,8 +1,23 @@
-import { Add, PlaylistAdd } from '@mui/icons-material';
-import { Button, Dialog, DialogContent, DialogTitle, IconButton } from '@mui/material';
+import { Add, Delete, PlaylistAdd } from '@mui/icons-material';
+import {
+  Button,
+  Dialog,
+  DialogContent,
+  DialogTitle,
+  IconButton,
+  List,
+  ListItem,
+  ListItemButton,
+  ListItemText,
+  Stack,
+  TextField,
+} from '@mui/material';
 import React from 'react';
-import { UseFormSetValue } from 'react-hook-form';
+import { Controller, useForm, UseFormSetValue } from 'react-hook-form';
 import { Transition } from '../../DialogTransition';
+import truncate from 'lodash/truncate';
+import { useAppDispatch, useAppSelector } from '../../../hooks';
+import { addPrincipalIdToList, PrincipalIdListType, removePrincipalIdFromList } from '../../../store/slices/common';
 
 interface PrincipalListButtonProps {
   setValue: UseFormSetValue<{ principalID: string }>;
@@ -10,6 +25,17 @@ interface PrincipalListButtonProps {
 
 export const PrincipalListButton = ({ setValue }: PrincipalListButtonProps) => {
   const [open, setOpen] = React.useState(false);
+  const [addingNew, setAddingNew] = React.useState(false);
+
+  const dispatch = useAppDispatch();
+  const { principalList } = useAppSelector((state) => state.common);
+
+  const {
+    control,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm<PrincipalIdListType>({ defaultValues: { name: '', principal: '' } });
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -19,8 +45,19 @@ export const PrincipalListButton = ({ setValue }: PrincipalListButtonProps) => {
     setOpen(false);
   };
 
-  const onSubmit = () => {
-    setValue('principalID', 'lolo');
+  const onPrincipalSelect = (id: string) => {
+    setValue('principalID', id);
+    setOpen(false);
+  };
+
+  const onSubmit = (values: PrincipalIdListType) => {
+    setAddingNew(false);
+    dispatch(addPrincipalIdToList(values));
+    reset();
+  };
+
+  const removePrincipalId = (id: number) => {
+    dispatch(removePrincipalIdFromList(id));
   };
 
   return (
@@ -31,7 +68,6 @@ export const PrincipalListButton = ({ setValue }: PrincipalListButtonProps) => {
 
       <Dialog
         open={open}
-        fullWidth
         TransitionComponent={Transition}
         onClose={handleClose}
         sx={{
@@ -41,13 +77,82 @@ export const PrincipalListButton = ({ setValue }: PrincipalListButtonProps) => {
           },
         }}
         disableScrollLock
-        maxWidth={false}
+        maxWidth='md'
+        fullWidth
       >
         <DialogTitle sx={{ fontWeight: 600 }}>Principal ID list</DialogTitle>
         <DialogContent dividers>
-          <Button variant='contained' startIcon={<Add />} fullWidth>
-            Add new
-          </Button>
+          {principalList.map(({ name, principal, id }) => (
+            <List key={id} dense sx={{ width: '100%' }}>
+              <ListItem
+                disablePadding
+                secondaryAction={
+                  <IconButton onClick={() => removePrincipalId(id)} edge='end'>
+                    <Delete />
+                  </IconButton>
+                }
+              >
+                <ListItemButton onClick={() => onPrincipalSelect(principal)}>
+                  {name} | {truncate(principal, { length: 14 })}
+                </ListItemButton>
+              </ListItem>
+            </List>
+          ))}
+
+          {addingNew ? (
+            <Stack component='form' onSubmit={handleSubmit(onSubmit)} spacing={1} mt={1}>
+              <Controller
+                control={control}
+                name='name'
+                rules={{ required: true }}
+                render={({ field: { value, onChange } }) => (
+                  <TextField
+                    autoFocus
+                    fullWidth
+                    id='name'
+                    placeholder='Name'
+                    variant='outlined'
+                    error={!!errors.name}
+                    helperText={!!errors.name && 'Name is required.'}
+                    value={value}
+                    size='small'
+                    onChange={(e) => {
+                      onChange(e.target.value);
+                    }}
+                  />
+                )}
+              />
+
+              <Controller
+                control={control}
+                name='principal'
+                rules={{ required: true, maxLength: 63, minLength: 63 }}
+                render={({ field: { value, onChange } }) => (
+                  <TextField
+                    fullWidth
+                    id='principal'
+                    placeholder='Principal ID'
+                    variant='outlined'
+                    error={!!errors.principal}
+                    helperText={!!errors.principal && 'Enter valid principal.'}
+                    value={value}
+                    size='small'
+                    onChange={(e) => {
+                      onChange(e.target.value);
+                    }}
+                  />
+                )}
+              />
+
+              <Button onClick={handleSubmit(onSubmit)} sx={{ mt: 1 }} variant='contained' startIcon={<Add />} fullWidth>
+                Add
+              </Button>
+            </Stack>
+          ) : (
+            <Button onClick={() => setAddingNew(true)} sx={{ mt: 1 }} variant='contained' startIcon={<Add />} fullWidth>
+              Add new
+            </Button>
+          )}
         </DialogContent>
       </Dialog>
     </>

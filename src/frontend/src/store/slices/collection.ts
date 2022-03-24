@@ -30,7 +30,14 @@ export const getCollections = createAsyncThunk<
   try {
     dispatch(toggleLoading(validate));
 
-    const collections = await collectionService.getCollections({ principalID });
+    let collections = [];
+
+    if (validate) {
+      collections = await collectionService.revalidateCollections({ principalID });
+    } else {
+      collections = await collectionService.getCachedCollections({ principalID });
+    }
+
     if (!collections.length) return rejectWithValue({ msg: 'No collections found for this principal.', principalID });
     return { collections, principalID };
   } catch (err) {

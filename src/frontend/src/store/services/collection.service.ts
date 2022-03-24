@@ -1,7 +1,7 @@
 import { getAllUserNFTs, getCachedUserNFTs } from '@psychedelic/dab-js';
 import { transformCollectionResponse } from '../../utils';
 
-const getCollections = async ({ principalID }: { principalID: string }) => {
+const getCachedCollections = async ({ principalID }: { principalID: string }) => {
   const collections = await getCachedUserNFTs({ userPID: principalID });
 
   const modified = transformCollectionResponse(collections);
@@ -17,4 +17,4 @@ const revalidateCollections = async ({ principalID }: { principalID: string }) =
   return modified;
 };
 
-export default { getCollections, revalidateCollections };
+export default { getCachedCollections, revalidateCollections };
