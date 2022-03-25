@@ -36,9 +36,15 @@ export const getData = createAsyncThunk<
   try {
     dispatch(toggleLoading(validate));
 
-    const listings = await listingService.getListingData();
-    const stats = await statsService.getStats();
-    const price = await priceService.getPrice();
+    let listings = [];
+    let stats = [];
+    let price = 0;
+
+    await Promise.all([
+      (listings = await listingService.getListingData()),
+      (stats = await statsService.getStats()),
+      (price = await priceService.getPrice()),
+    ]);
 
     return { listings, stats, price };
   } catch (err) {

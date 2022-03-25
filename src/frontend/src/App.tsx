@@ -1,7 +1,7 @@
 import React from 'react';
 import CssBaseline from '@mui/material/CssBaseline';
 import { ThemeProvider } from '@mui/material/styles';
-import Routes from './routes';
+import Routes from './pages';
 import ScrollToTop from './components/ScrollToTop';
 import { useAppSelector } from './hooks';
 import { createTheme } from '@mui/material';

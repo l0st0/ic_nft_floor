@@ -19,7 +19,13 @@ export const Search = () => {
   const dispatch = useAppDispatch();
   const { loading, collections, validating } = useAppSelector((state) => state.collection);
   const { principalID: defaultPrincipalID } = useAppSelector((state) => state.common);
-  const { loading: dataLoading, error: dataError, validating: validatingData } = useAppSelector((state) => state.data);
+  const {
+    loading: dataLoading,
+    error: dataError,
+    validating: validatingData,
+    stats,
+    listings,
+  } = useAppSelector((state) => state.data);
 
   const headingRef = React.useRef(null);
   const { width } = useComponentSize(headingRef);
@@ -33,8 +39,9 @@ export const Search = () => {
 
   const onSubmit = async ({ principalID }: Form) => {
     dispatch(signPrincipalID(principalID));
-    await dispatch(getData({}));
-    await dispatch(getCollections({ principalID }));
+
+    await Promise.all([dispatch(getData({})), dispatch(getCollections({ principalID }))]);
+
     await dispatch(getCollections({ principalID, validate: true }));
   };
 
@@ -108,7 +115,7 @@ export const Search = () => {
           </Stack>
         </Stack>
 
-        {collections.length ? (
+        {!!collections.length && !!stats.length && !!listings.length ? (
           <Stack width={width} mt={1} flexDirection='row' flexWrap='wrap'>
             <ResetButtons />
           </Stack>

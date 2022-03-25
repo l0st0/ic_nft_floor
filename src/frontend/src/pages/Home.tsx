@@ -14,9 +14,10 @@ export const Home = () => {
 
   const { collections, error: collectionError, validating } = useAppSelector((state) => state.collection);
   const { principalID } = useAppSelector((state) => state.common);
-  const { error: dataError } = useAppSelector((state) => state.data);
+  const { error: dataError, stats, listings } = useAppSelector((state) => state.data);
 
-  const displayCollections = !dataError && !collectionError && !!collections.length;
+  const displayCollections =
+    !dataError && !collectionError && !!collections.length && !!stats.length && !!listings.length;
 
   return (
     <>
