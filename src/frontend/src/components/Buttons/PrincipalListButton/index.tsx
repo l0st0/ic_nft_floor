@@ -30,6 +30,12 @@ export const PrincipalListButton = ({ setValue }: PrincipalListButtonProps) => {
   const dispatch = useAppDispatch();
   const { principalList } = useAppSelector((state) => state.common);
 
+  React.useEffect(() => {
+    if (!open) {
+      setAddingNew(false);
+    }
+  }, [open]);
+
   const {
     control,
     handleSubmit,
@@ -54,6 +60,12 @@ export const PrincipalListButton = ({ setValue }: PrincipalListButtonProps) => {
     setAddingNew(false);
     dispatch(addPrincipalIdToList(values));
     reset();
+  };
+
+  const submitForm = (e: any) => {
+    e.stopPropagation();
+    const makeSubmit = handleSubmit(onSubmit);
+    makeSubmit(e);
   };
 
   const removePrincipalId = (id: number) => {
@@ -100,7 +112,7 @@ export const PrincipalListButton = ({ setValue }: PrincipalListButtonProps) => {
           ))}
 
           {addingNew ? (
-            <Stack component='form' onSubmit={handleSubmit(onSubmit)} spacing={1} mt={1}>
+            <Stack component='form' onSubmit={submitForm} spacing={1} mt={1}>
               <Controller
                 control={control}
                 name='name'
@@ -144,7 +156,7 @@ export const PrincipalListButton = ({ setValue }: PrincipalListButtonProps) => {
                 )}
               />
 
-              <Button onClick={handleSubmit(onSubmit)} sx={{ mt: 1 }} variant='contained' startIcon={<Add />} fullWidth>
+              <Button type='submit' sx={{ mt: 1 }} variant='contained' startIcon={<Add />} fullWidth>
                 Add
               </Button>
             </Stack>
