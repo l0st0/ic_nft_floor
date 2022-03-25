@@ -41,8 +41,6 @@ export const Search = () => {
     dispatch(signPrincipalID(principalID));
 
     await Promise.all([dispatch(getData({})), dispatch(getCollections({ principalID }))]);
-
-    await dispatch(getCollections({ principalID, validate: true }));
   };
 
   const disabled = loading || validating || dataLoading || validatingData || !!dataError;
@@ -108,7 +106,7 @@ export const Search = () => {
               disabled={disabled}
               type='submit'
               variant='contained'
-              sx={{ m: '0 !important', maxHeight: 40, minWidth: 0 }}
+              sx={{ m: '0 !important', height: 40, minWidth: 0 }}
             >
               <Send />
             </LoadingButton>
