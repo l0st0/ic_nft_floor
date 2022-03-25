@@ -1,4 +1,10 @@
 import { Add, Delete, PlaylistAdd } from '@mui/icons-material';
+import React from 'react';
+import { Controller, useForm, UseFormSetValue } from 'react-hook-form';
+import { Transition } from '../../DialogTransition';
+import truncate from 'lodash/truncate';
+import { useAppDispatch, useAppSelector } from '../../../hooks';
+import { addPrincipalIdToList, PrincipalIdListType, removePrincipalIdFromList } from '../../../store/slices/common';
 import {
   Button,
   Dialog,
@@ -8,16 +14,9 @@ import {
   List,
   ListItem,
   ListItemButton,
-  ListItemText,
   Stack,
   TextField,
 } from '@mui/material';
-import React from 'react';
-import { Controller, useForm, UseFormSetValue } from 'react-hook-form';
-import { Transition } from '../../DialogTransition';
-import truncate from 'lodash/truncate';
-import { useAppDispatch, useAppSelector } from '../../../hooks';
-import { addPrincipalIdToList, PrincipalIdListType, removePrincipalIdFromList } from '../../../store/slices/common';
 
 interface PrincipalListButtonProps {
   setValue: UseFormSetValue<{ principalID: string }>;

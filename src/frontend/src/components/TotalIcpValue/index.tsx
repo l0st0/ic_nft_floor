@@ -42,6 +42,8 @@ export const TotalIcpValue = () => {
     }
   };
 
+  const gridStyle = { width: { xs: '100%', md: 'auto' } };
+
   return (
     <>
       <Stack flexDirection='row' alignItems='flex-start'>
@@ -57,23 +59,23 @@ export const TotalIcpValue = () => {
       <Chart />
 
       <Grid container spacing={2} rowSpacing={1} mb={3} mt={1} textAlign='center'>
-        <Grid sx={{ width: { xs: '100%', md: 'auto' } }} item>
+        <Grid sx={gridStyle} item>
           {displayBox('actual')}
         </Grid>
 
-        <Grid sx={{ width: { xs: '100%', md: 'auto' } }} item>
+        <Grid sx={gridStyle} item>
           {displayBox('oneHour')}
         </Grid>
 
-        <Grid sx={{ width: { xs: '100%', md: 'auto' } }} item>
+        <Grid sx={gridStyle} item>
           {displayBox('day')}
         </Grid>
 
-        <Grid sx={{ width: { xs: '100%', md: 'auto' } }} item>
+        <Grid sx={gridStyle} item>
           {displayBox('week')}
         </Grid>
 
-        <Grid sx={{ width: { xs: '100%', md: 'auto' } }} item>
+        <Grid sx={gridStyle} item>
           <StatsBox title='More' value='SOON' />
         </Grid>
       </Grid>
