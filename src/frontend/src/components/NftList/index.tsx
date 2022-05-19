@@ -13,7 +13,7 @@ export const NftList = () => {
   const { collectionWithPrice } = useAppSelector(selectModifyCollection);
 
   return (
-    <Stack mt={5}>
+    <Stack mt={3}>
       <Typography variant='h6' fontWeight={600}>
         Collection of {numberOfTokens} tokens
       </Typography>
@@ -74,66 +74,48 @@ export const NftList = () => {
                     }}
                     secondary={
                       <Stack component='span'>
-                        {item.floorPrice > 0 ? (
-                          <>
-                            <span>
-                              <Typography
-                                sx={{ display: 'inline' }}
-                                component='span'
-                                variant='body2'
-                                color='text.primary'
-                              >
-                                Floor price
-                              </Typography>
-                              {showIcp
-                                ? ` — ${formatPrice(item.floorPrice, 2)} ICP`
-                                : ` — ${formatPrice(item.floorPrice * price, 0, true)}`}
-                            </span>
-                            <span>
-                              <Typography
-                                sx={{ display: 'inline' }}
-                                component='span'
-                                variant='body2'
-                                color='text.primary'
-                              >
-                                Total value
-                              </Typography>
-                              {showIcp
-                                ? ` — ${formatPrice(item.totalPrice, 2)} ICP`
-                                : ` — ${formatPrice(item?.totalPrice * price, 0, true)}`}
-                            </span>
-                            {hourOldPrice ? (
-                              <span>
-                                <Typography
-                                  sx={{ display: 'inline' }}
-                                  component='span'
-                                  variant='body2'
-                                  color='text.primary'
-                                >
-                                  1h
-                                </Typography>
-                                {renderPercent(hourPercent)}
-                              </span>
-                            ) : null}
-                            {dayOldPrice ? (
-                              <span>
-                                <Typography
-                                  sx={{ display: 'inline' }}
-                                  component='span'
-                                  variant='body2'
-                                  color='text.primary'
-                                >
-                                  24h
-                                </Typography>
-                                {renderPercent(dayPercent)}
-                              </span>
-                            ) : null}
-                          </>
-                        ) : (
+                        <span>
+                          <Typography sx={{ display: 'inline' }} component='span' variant='body2' color='text.primary'>
+                            Floor price
+                          </Typography>
+                          {showIcp
+                            ? ` — ${formatPrice(item.floorPrice, 2)} ICP`
+                            : ` — ${formatPrice(item.floorPrice * price, 0, true)}`}
+                        </span>
+                        <span>
+                          <Typography sx={{ display: 'inline' }} component='span' variant='body2' color='text.primary'>
+                            Total value
+                          </Typography>
+                          {showIcp
+                            ? ` — ${formatPrice(item.totalPrice, 2)} ICP`
+                            : ` — ${formatPrice(item?.totalPrice * price, 0, true)}`}
+                        </span>
+                        {hourOldPrice ? (
                           <span>
-                            It seems we get no listings for this NFT :/ Please message me on Twitter @losto229. Thanks.
+                            <Typography
+                              sx={{ display: 'inline' }}
+                              component='span'
+                              variant='body2'
+                              color='text.primary'
+                            >
+                              1h
+                            </Typography>
+                            {renderPercent(hourPercent)}
                           </span>
-                        )}
+                        ) : null}
+                        {dayOldPrice ? (
+                          <span>
+                            <Typography
+                              sx={{ display: 'inline' }}
+                              component='span'
+                              variant='body2'
+                              color='text.primary'
+                            >
+                              24h
+                            </Typography>
+                            {renderPercent(dayPercent)}
+                          </span>
+                        ) : null}
                       </Stack>
                     }
                   />

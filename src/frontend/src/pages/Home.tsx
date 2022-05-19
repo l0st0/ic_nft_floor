@@ -1,6 +1,6 @@
 import { Refresh } from '@mui/icons-material';
 import { LoadingButton } from '@mui/lab';
-import { Button, Stack } from '@mui/material';
+import { Alert, Button, Stack } from '@mui/material';
 import { NftList } from '../components/NftList';
 import { Search } from '../components/Search';
 import { TopBar } from '../components/TopBar';
@@ -49,11 +49,15 @@ export const Home = () => {
       {displayCollections ? (
         <>
           <TotalIcpValue />
+          <Alert severity='info'>
+            The reasons why the collection is not displaying might be, not listed on Entrepot or not registred in
+            dab.ooo
+          </Alert>
           <NftList />
         </>
       ) : (
         <Stack alignItems='center' spacing={2}>
-          <span>No collection found.</span>
+          No collection found.
         </Stack>
       )}
     </>

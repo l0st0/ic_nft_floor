@@ -29,6 +29,7 @@ export const selectModifyCollection = createSelector(
 
         return { ...col, floorPrice, totalPrice, stats: statData };
       })
+      .filter(({ floorPrice }) => floorPrice)
       .sort((a, b) => b.totalPrice - a.totalPrice);
 
     const totalCollectionsPrice = {
