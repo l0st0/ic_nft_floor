@@ -50,7 +50,7 @@ export const Home = () => {
         <>
           <TotalIcpValue />
           <Alert severity='info'>
-            The reasons why the collection is not displaying might be, not listed on Entrepot or not registred in
+            The reasons why the collection is not displaying might be - not listed on Entrepot or not registred in
             dab.ooo
           </Alert>
           <NftList />
