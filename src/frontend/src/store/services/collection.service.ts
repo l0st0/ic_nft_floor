@@ -1,7 +1,13 @@
-import { getAllUserNFTs, getCachedUserNFTs } from '@psychedelic/dab-js';
-import { transformCollectionResponse } from '../../utils';
+import { getAllUserNFTs, getCachedUserNFTs } from "@psychedelic/dab-js";
+import { transformCollectionResponse } from "../../utils";
 
-const getCollections = async ({ principalID, validate }: { principalID: string; validate: boolean }) => {
+const getCollections = async ({
+  principalID,
+  validate,
+}: {
+  principalID: string;
+  validate: boolean;
+}) => {
   let collectionResponse = [];
 
   if (validate) {

@@ -1,9 +1,6 @@
 // Version: 1.0.0
-type CanisterData = {canisterId : Text; price : Float};
 type Canisters = {canister : Text; name : Text};
-type Stats = {data : [CanisterData]; time : Text};
 actor {
   stable var canisters : [Canisters];
-  stable var entriesStats : [(Text, Stats)];
   stable var priceData : {date : Text; price : Float}
 };

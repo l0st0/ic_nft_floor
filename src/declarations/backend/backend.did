@@ -1,8 +1,3 @@
-type Stats = 
- record {
-   data: vec CanisterData;
-   time: text;
- };
 type PriceData = 
  record {
    date: text;
@@ -13,17 +8,9 @@ type Canisters =
    canister: text;
    name: text;
  };
-type CanisterData = 
- record {
-   canisterId: text;
-   price: float64;
- };
 service : {
-  addStats: (Stats) -> ();
   getCanisters: () -> (vec Canisters) query;
   getPrice: () -> (PriceData) query;
-  getStat: (text) -> (opt Stats) query;
-  getStats: () -> (vec Stats) query;
   updateCanisters: (vec Canisters) -> (vec Canisters);
   updatePrice: (PriceData) -> (PriceData);
 }

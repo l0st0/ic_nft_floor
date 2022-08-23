@@ -1,8 +1,9 @@
-import Map "mo:base/HashMap";
-import Iter "mo:base/Iter";
 import Float "mo:base/Float";
-import Text "mo:base/Text";
+import Iter "mo:base/Iter";
+import Map "mo:base/HashMap";
 import Nat "mo:base/Nat";
+import Text "mo:base/Text";
+
 import Types "Types"; 
 
 actor {
@@ -31,32 +32,6 @@ actor {
         priceData := data;
 
         return data;
-    };
-
-    // Stats
-    stable var entriesStats : [(Text, Types.Stats)] = [];
-    let mapStats = Map.fromIter<Text,Types.Stats>(entriesStats.vals(), 10, Text.equal, Text.hash);
-
-    public func addStats(data: Types.Stats): async () {
-        mapStats.put(data.time, data);
-    };
-
-    public query func getStat(key: Text) : async ?Types.Stats {
-        return mapStats.get(key);
-    };
-
-    public query func getStats() : async [Types.Stats] {
-        var iter: Iter.Iter<Types.Stats> = mapStats.vals();
-        
-        return Iter.toArray(iter);
-    };
-
-    system func preupgrade() {
-        entriesStats := Iter.toArray(mapStats.entries());
-    };
-
-    system func postupgrade() {
-        entriesStats := [];
     };
 };
  

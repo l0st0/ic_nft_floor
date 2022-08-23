@@ -1,4 +1,4 @@
-export type ModeType = 'light' | 'dark' | 'system';
+export type ModeType = "light" | "dark" | "system";
 
 export interface Listing {
   canisterId: string;
@@ -8,11 +8,6 @@ export interface Listing {
 export interface StatsData {
   canisterId: string;
   price: number;
-}
-
-export interface Stats {
-  data: StatsData[];
-  time: string;
 }
 
 export interface Canister {

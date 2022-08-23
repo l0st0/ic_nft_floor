@@ -3,11 +3,6 @@ module Types {
         canisterId: Text;
         price: Float;
     };
-    
-    public type Stats = {
-        data: [CanisterData];
-        time: Text;
-    };
 
     public type PriceData = {
         price: Float;
